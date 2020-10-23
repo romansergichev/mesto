@@ -8,11 +8,13 @@
 </head>
 <body class="body">
   <div class="root">
+
     <header class="header">
       <a href="#" class="header__logo-link">
         <img src="./images/icons/mesto-logo.svg" alt="Логотип Место" class="header__logo">
       </a>
     </header>
+    
     
     <main class="main">
 
@@ -24,6 +26,15 @@
             <p class="profile__description">Исследователь океана</p>
           </div>
           <button class="profile__edit"></button>
+          <div class="popup">
+            <div class="popup__container">
+              <span class="popup__close-button"></span>
+              <h2 class="popup__title">Редактировать профиль</h2>
+              <input type="text" class="popup__input popup__input_type_name">
+              <input type="text" class="popup__input popup__input_type_description">
+              <button class="popup__submit-button">Сохранить</button>
+            </div>
+          </div>
         </div>
         <button class="profile__add-button"></button>
       </section>
@@ -32,42 +43,42 @@
         <div class="post">
           <img src="./images/dombai.jpg" alt="Домбай" class="post__image">
           <div class="post__info">
-            <h2 class="post__title">Домбай</h2>
+            <h3 class="post__title">Домбай</h3>
             <span class="post__like-button"></span>
           </div>
         </div>
         <div class="post">
           <img src="./images/elbrus.jpg" alt="Эльбрус" class="post__image">
           <div class="post__info">
-            <h2 class="post__title">Эльбрус</h2>
+            <h3 class="post__title">Эльбрус</h3>
             <span class="post__like-button"></span>
           </div>
         </div>
         <div class="post">
           <img src="./images/karachaevsk.jpg" alt="Карачаево-Черкесия" class="post__image">
           <div class="post__info">
-            <h2 class="post__title">Карачаево-Черкесия</h2>
+            <h3 class="post__title">Карачаево-Черкесия</h3>
             <span class="post__like-button"></span>
           </div>
         </div>
         <div class="post">
           <img src="./images/dombai.jpg" alt="Домбай" class="post__image">
           <div class="post__info">
-            <h2 class="post__title">Домбай</h2>
+            <h3 class="post__title">Домбай</h3>
             <span class="post__like-button"></span>
           </div>
         </div>
         <div class="post">
           <img src="./images/elbrus.jpg" alt="Эльбрус" class="post__image">
           <div class="post__info">
-            <h2 class="post__title">Эльбрус</h2>
+            <h3 class="post__title">Эльбрус</h3>
             <span class="post__like-button"></span>
           </div>
         </div>
         <div class="post">
           <img src="./images/karachaevsk.jpg" alt="Карачаево-Черкесия" class="post__image">
           <div class="post__info">
-            <h2 class="post__title">Карачаево-Черкесия</h2>
+            <h3 class="post__title">Карачаево-Черкесия</h3>
             <span class="post__like-button"></span>
           </div>
         </div>
@@ -79,5 +90,6 @@
       <p class="footer__text">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
+ <script src="./scripts/script.js"></script> 
 </body>
 </html>
