@@ -1,0 +1,7 @@
+.post__like-button {
+  background-image: url(../../../images/icons/like-icon.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 21px;
+  height: 19px;
+}

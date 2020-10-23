@@ -1,0 +1,11 @@
+@import url(./__image/post__image.css);
+@import url(./__info/post__info.css);
+@import url(./__title/post__title.css);
+@import url(./__like-button/post__like-button.css);
+
+.post {
+  background-color: #fff;
+  color: black;
+  max-width: 282px;
+  border-radius: 10px;
+}
