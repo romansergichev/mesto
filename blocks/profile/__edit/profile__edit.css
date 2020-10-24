@@ -16,3 +16,17 @@
 .profile__edit:hover {
   opacity: .6;
 }
+
+@media screen and (max-width: 922px) {
+  .profile__edit {
+    margin-top: 16px;
+  }
+}
+
+@media screen and (max-width: 622px) {
+  .profile__edit {
+    margin-top: 19px;
+    width: 18px;
+    height: 18px;
+  }
+}

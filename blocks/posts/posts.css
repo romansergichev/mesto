@@ -5,17 +5,12 @@
   justify-items: center;
   align-content: center;
   gap: 20px 18px;
-  margin: 50px auto 0 auto;
+  margin: 50px 0 0;
 }
-
-@media screen and (max-width: 922px) {
-  .posts {
-    max-width: 582px;
-  }
-} 
 
 @media screen and (max-width: 622px) {
   .posts {
-    max-width: 282px;
+    margin: 36px 0 0;
   }
-} 
+}
+

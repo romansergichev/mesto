@@ -3,8 +3,15 @@
 
 .header {
   max-height: 74px;
+  max-width: 882px;
   width: 100%;
   border-bottom: 1px solid #545454b0;
   display: flex;
   padding-top: 45px;
+}
+
+@media screen and (max-width: 622px) {
+  .header {
+    padding-top: 28px;
+  }
 }

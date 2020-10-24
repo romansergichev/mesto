@@ -2,3 +2,15 @@
   margin-bottom: 40px;
   margin-left: 2px;
 }
+
+@media screen and (max-width: 900px) {
+  .header__logo-link{
+    margin-left: 27px;
+  }
+}
+
+@media screen and (max-width: 622px) {
+  .header__logo-link {
+    margin-bottom: 31px;
+  }
+}
