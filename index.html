@@ -28,11 +28,13 @@
           <button class="profile__edit"></button>
           <div class="popup">
             <div class="popup__container">
-              <span class="popup__close-button"></span>
+              <button type="button" class="popup__close-button"></button>
               <h2 class="popup__title">Редактировать профиль</h2>
-              <input type="text" class="popup__input popup__input_type_name">
-              <input type="text" class="popup__input popup__input_type_description">
-              <button class="popup__submit-button">Сохранить</button>
+              <form class="popup__form">
+                <input type="text" class="popup__input popup__input_type_name">
+                <input type="text" class="popup__input popup__input_type_description">
+                <button type="submit" class="popup__submit-button">Сохранить</button>
+              </form>
             </div>
           </div>
         </div>
