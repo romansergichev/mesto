@@ -1,3 +1,11 @@
 .profile__user-info {
-  max-width: 295px;;
+  min-width: 295px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 622px) {
+  .profile__user-info {
+    align-items: center;
+  }
 }
