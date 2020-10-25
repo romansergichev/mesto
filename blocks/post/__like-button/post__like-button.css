@@ -9,7 +9,3 @@
   cursor: pointer;
   transition: .3s;
 }
-
-.post__like-button {
-  color: red;
-}
