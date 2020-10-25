@@ -8,8 +8,8 @@ let editDescription = document.querySelector('.popup__input_type_description');
 let editForm = document.querySelector('.popup__form');
 
 function addInfoToInput() {
-  editName.setAttribute('value', userName.textContent);
-  editDescription.setAttribute('value', profileDescription.textContent);  
+  editName.value = userName.textContent;
+  editDescription.value = profileDescription.textContent;  
 }
 
 function openPopup() {
@@ -21,10 +21,6 @@ function closePopup() {
   popup.classList.remove('popup_opened');
 }
 
-
-editButton.addEventListener('click', openPopup);
-closePopupButton.addEventListener('click', closePopup);
-
 function formSubmit(event) {
   event.preventDefault();
   userName.textContent = editName.value; 
@@ -32,5 +28,7 @@ function formSubmit(event) {
   closePopup();
 }
 
+editButton.addEventListener('click', openPopup);
+closePopupButton.addEventListener('click', closePopup);
 editForm.addEventListener('submit', formSubmit);
 
