@@ -92,6 +92,8 @@ function submitAddPostForm (evt) {
   evt.preventDefault();
   addPost();
   closePopup();  
+  formLink.value = '';
+  formPlace.value = '';
 }
 
 editButton.addEventListener('click', openEditPopup);
