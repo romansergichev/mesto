@@ -1,8 +1,13 @@
 @import url(./__container/popup__container.css);
+@import url(./__container/_size/popup__container_size_s.css);
 @import url(./__close-button/popup__close-button.css);
+@import url(./__close-button/_position/popup__close-button_position_corner.css);
 @import url(./__title/popup__title.css);
+@import url(./__title/_margin/popup__title_margin.css);
 @import url(./__form/popup__form.css);
 @import url(./__input/popup__input.css);
+@import url(./__input/_type/popup__input_type_place.css);
+@import url(./__input/_type/popup__input_type_link.css);
 @import url(./__submit-button/popup__submit-button.css);
 
 .popup {
