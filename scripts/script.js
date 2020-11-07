@@ -1,11 +1,3 @@
-let editButton = document.querySelector('.profile__edit');
-let popup = document.querySelector('.popup');
-let closePopupButton = document.querySelector('.popup__close-button');
-let userName = document.querySelector('.profile__name');
-let profileDescription = document.querySelector('.profile__description');
-let editName = document.querySelector('.popup__input_type_name');
-let editDescription = document.querySelector('.popup__input_type_description');
-let editForm = document.querySelector('.popup__form');
 const initialPost = [
   {
       name: 'Архыз',
@@ -32,8 +24,22 @@ const initialPost = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-
-let postsList = document.querySelector('.posts__list');
+const userName = document.querySelector('.profile__name');
+const profileDescription = document.querySelector('.profile__description');
+const editButton = document.querySelector('.profile__edit');
+const addButton = document.querySelector('.profile__add-button');
+const popupEditProfile = document.querySelector('.popup_type_edit');
+const popupAddPost = document.querySelector('.popup_type_add-post');
+const popupCloseButton = document.querySelectorAll('.popup__close-button');
+const popupCloseEditButton = popupCloseButton[0];
+const popupCloseAddPostButton = popupCloseButton[1];
+const formEdit = document.querySelector('.popup__form_type_edit');
+const formName = document.querySelector('.popup__input_type_name');
+const formDescription = document.querySelector('.popup__input_type_description');
+const formAddPost = document.querySelector('.popup__form_type_add-post');
+const formPlace = document.querySelector('.popup__input_type_place');
+const formLink = document.querySelector('.popup__input_type_link');
+const postsList = document.querySelector('.posts__list');
 
 //Добавить посты на страницу при загрузке страницы.
 initialPost.forEach(function(item) {
@@ -48,27 +54,48 @@ initialPost.forEach(function(item) {
 });
 
 function addInfoToInput() {
-  editName.value = userName.textContent;
-  editDescription.value = profileDescription.textContent;  
+  formName.value = userName.textContent;
+  formDescription.value = profileDescription.textContent;  
 }
 
-function openPopup() {
-  popup.classList.add('popup_opened');
+function openEditPopup() {
+  popupEditProfile.classList.add('popup_opened');
   addInfoToInput();
 } 
 
-function closePopup() {
-  popup.classList.remove('popup_opened');
+function openAddPostPopup() {
+  popupAddPost.classList.add('popup_opened');
 }
 
-function formSubmit(event) {
-  event.preventDefault();
-  userName.textContent = editName.value; 
-  profileDescription.textContent = editDescription.value;
+function closePopup() {
+  popupEditProfile.classList.remove('popup_opened') || popupAddPost.classList.remove('popup_opened');
+}
+
+function submitEditForm (evt) {
+  evt.preventDefault();
+  userName.textContent = formName.value; 
+  profileDescription.textContent = formDescription.value;
   closePopup();
 }
 
-editButton.addEventListener('click', openPopup);
-closePopupButton.addEventListener('click', closePopup);
-editForm.addEventListener('submit', formSubmit);
+function addPost() {
+  const postTemplate = document.querySelector('#post-template').content;
+  const post = postTemplate.cloneNode(true);
+  post.querySelector('.post__image').src = formLink.value;
+  post.querySelector('.post__image').alt = formPlace.value;
+  post.querySelector('.post__title').textContent = formPlace.value;
+  postsList.prepend(post);
+}
 
+function submitAddPostForm (evt) {
+  evt.preventDefault();
+  addPost();
+  closePopup();  
+}
+
+editButton.addEventListener('click', openEditPopup);
+popupCloseEditButton.addEventListener('click', closePopup);
+popupCloseAddPostButton.addEventListener('click', closePopup);
+addButton.addEventListener('click', openAddPostPopup);
+formEdit.addEventListener('submit', submitEditForm);
+formAddPost.addEventListener('submit',submitAddPostForm);
