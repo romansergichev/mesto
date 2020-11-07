@@ -49,7 +49,7 @@ initialPost.forEach(function(item) {
   post.querySelector('.post__image').src = item['link'];
   post.querySelector('.post__image').alt = item['name'];
   post.querySelector('.post__title').textContent = item['name'];
-
+  post.querySelector('.post__like-button').addEventListener('click', evt => evt.target.classList.toggle('post__like-button_active'));
   postsList.append(post);
 });
 
@@ -84,6 +84,7 @@ function addPost() {
   post.querySelector('.post__image').src = formLink.value;
   post.querySelector('.post__image').alt = formPlace.value;
   post.querySelector('.post__title').textContent = formPlace.value;
+  post.querySelector('.post__like-button').addEventListener('click', evt => evt.target.classList.toggle('post__like-button_active'));
   postsList.prepend(post);
 }
 

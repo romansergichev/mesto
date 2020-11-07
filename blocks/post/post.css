@@ -2,7 +2,7 @@
 @import url(./__info/post__info.css);
 @import url(./__title/post__title.css);
 @import url(./__like-button/post__like-button.css);
-
+@import url(./__like-button/_active/post__like-button_active.css);
 .post {
   background-color: #fff;
   color: black;
