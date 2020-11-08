@@ -40,18 +40,7 @@ const formAddPost = document.querySelector('.popup__form_type_add-post');
 const formPlace = document.querySelector('.popup__input_type_place');
 const formLink = document.querySelector('.popup__input_type_link');
 const postsList = document.querySelector('.posts__list');
-
-//Добавить посты на страницу при загрузке страницы.
-initialPost.forEach(function(item) {
-  const postTemplate = document.querySelector('#post-template').content;
-  const post = postTemplate.cloneNode(true);
-
-  post.querySelector('.post__image').src = item['link'];
-  post.querySelector('.post__image').alt = item['name'];
-  post.querySelector('.post__title').textContent = item['name'];
-  post.querySelector('.post__like-button').addEventListener('click', evt => evt.target.classList.toggle('post__like-button_active'));
-  postsList.append(post);
-});
+const postTemplate = document.querySelector('#post-template').content;
 
 function addInfoToInput() {
   formName.value = userName.textContent;
@@ -78,24 +67,32 @@ function submitEditForm (evt) {
   closePopup();
 }
 
-function addPost() {
-  const postTemplate = document.querySelector('#post-template').content;
+function addPost (place, link) {
   const post = postTemplate.cloneNode(true);
-  post.querySelector('.post__image').src = formLink.value;
-  post.querySelector('.post__image').alt = formPlace.value;
-  post.querySelector('.post__title').textContent = formPlace.value;
-  post.querySelector('.post__like-button').addEventListener('click', evt => evt.target.classList.toggle('post__like-button_active'));
+  const postImage = post.querySelector('.post__image');
+  const postTitile = post.querySelector('.post__title');
+  const postLikeButton = post.querySelector('.post__like-button');
+  const postDeleteButton = post.querySelector('.post__delete');
+  postImage.src = link;
+  postImage.alt = place;
+  postTitile.textContent = place;
+  postLikeButton.addEventListener('click', evt => evt.target.classList.toggle('post__like-button_active'));
+  postDeleteButton.addEventListener('click', () => {
+    const postToBeDeleted = postDeleteButton.closest('.post');
+    postToBeDeleted.remove();
+  })
   postsList.prepend(post);
 }
 
 function submitAddPostForm (evt) {
   evt.preventDefault();
-  addPost();
+  addPost(formPlace.value, formLink.value);
   closePopup();  
   formLink.value = '';
   formPlace.value = '';
 }
 
+initialPost.forEach(item => addPost(item['name'], item['link']));
 editButton.addEventListener('click', openEditPopup);
 popupCloseEditButton.addEventListener('click', closePopup);
 popupCloseAddPostButton.addEventListener('click', closePopup);
