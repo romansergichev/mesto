@@ -39,8 +39,13 @@ const formDescription = document.querySelector('.popup__input_type_description')
 const formAddPost = document.querySelector('.popup__form_type_add-post');
 const formPlace = document.querySelector('.popup__input_type_place');
 const formLink = document.querySelector('.popup__input_type_link');
+const photoModal = document.querySelector('.photo-modal');
+const modalCloseButton = document.querySelector('.photo-modal__close-button')
+const modalImage = document.querySelector('.photo-modal__image');
+const modalTitle = document.querySelector('.photo-modal__title');
 const postsList = document.querySelector('.posts__list');
 const postTemplate = document.querySelector('#post-template').content;
+
 
 function addInfoToInput() {
   formName.value = userName.textContent;
@@ -60,6 +65,12 @@ function closePopup() {
   popupEditProfile.classList.remove('popup_opened') || popupAddPost.classList.remove('popup_opened');
 }
 
+
+
+function closePhotoModal() {
+  photoModal.classList.remove('photo-modal_opened');
+}
+
 function submitEditForm (evt) {
   evt.preventDefault();
   userName.textContent = formName.value; 
@@ -76,6 +87,12 @@ function addPost (place, link) {
   postImage.src = link;
   postImage.alt = place;
   postTitile.textContent = place;
+  postImage.addEventListener('click', function openPhotoModal() {
+    photoModal.classList.add('photo-modal_opened');
+    modalImage.src = link;
+    modalImage.alt = place;
+    modalTitle.textContent = place;
+  });
   postLikeButton.addEventListener('click', evt => evt.target.classList.toggle('post__like-button_active'));
   postDeleteButton.addEventListener('click', () => {
     const postToBeDeleted = postDeleteButton.closest('.post');
@@ -92,10 +109,13 @@ function submitAddPostForm (evt) {
   formPlace.value = '';
 }
 
+
+
 initialPost.forEach(item => addPost(item['name'], item['link']));
 editButton.addEventListener('click', openEditPopup);
 popupCloseEditButton.addEventListener('click', closePopup);
 popupCloseAddPostButton.addEventListener('click', closePopup);
+modalCloseButton.addEventListener('click', closePhotoModal);
 addButton.addEventListener('click', openAddPostPopup);
 formEdit.addEventListener('submit', submitEditForm);
 formAddPost.addEventListener('submit',submitAddPostForm);
