@@ -20,3 +20,9 @@
     line-height: 2.07;
   }
 }
+
+@-moz-document url-prefix() {
+  .profile__name {
+    vertical-align: middle;
+  }
+}

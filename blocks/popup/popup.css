@@ -23,5 +23,5 @@
   height: 100vh;
   visibility: hidden;
   opacity: 0;
-  transition: .3s visibility, .3s opacity;
+  transition: .3s visibility, .3s opacity ease-in-out;
 }
