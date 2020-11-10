@@ -1,4 +1,4 @@
-const initialPost = [
+const initialPosts = [
   {
       name: 'Архыз',
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -30,92 +30,96 @@ const editButton = document.querySelector('.profile__edit');
 const addButton = document.querySelector('.profile__add-button');
 const popupEditProfile = document.querySelector('.popup_type_edit');
 const popupAddPost = document.querySelector('.popup_type_add-post');
-const popupCloseButton = document.querySelectorAll('.popup__close-button');
-const popupCloseEditButton = popupCloseButton[0];
-const popupCloseAddPostButton = popupCloseButton[1];
+const popupCloseEditButton = document.querySelector('.popup__close-button_type_edit');
+const popupCloseAddPostButton = document.querySelector('.popup__close-button_type_add-post');
+const popupClosePhotoButton = document.querySelector('.popup__close-button_type_photo');
 const formEdit = document.querySelector('.popup__form_type_edit');
 const formName = document.querySelector('.popup__input_type_name');
 const formDescription = document.querySelector('.popup__input_type_description');
 const formAddPost = document.querySelector('.popup__form_type_add-post');
 const formPlace = document.querySelector('.popup__input_type_place');
 const formLink = document.querySelector('.popup__input_type_link');
-const photoModal = document.querySelector('.photo-modal');
-const modalCloseButton = document.querySelector('.photo-modal__close-button')
-const modalImage = document.querySelector('.photo-modal__image');
-const modalTitle = document.querySelector('.photo-modal__title');
+const popupPhoto = document.querySelector('.popup_type_photo');
+const modalImage = document.querySelector('.popup__post-image');
+const modalTitle = document.querySelector('.popup__post-title');
 const postsList = document.querySelector('.posts__list');
 const postTemplate = document.querySelector('#post-template').content;
+let post = '';
 
-
-function addInfoToInput() {
-  formName.value = userName.textContent;
-  formDescription.value = profileDescription.textContent;  
+function openPopup (element){
+    element.classList.add('popup_opened');
 }
 
-function openEditPopup() {
-  popupEditProfile.classList.add('popup_opened');
-  addInfoToInput();
-} 
-
-function openAddPostPopup() {
-  popupAddPost.classList.add('popup_opened');
-}
-
-function closePopup() {
-  popupEditProfile.classList.remove('popup_opened') || popupAddPost.classList.remove('popup_opened');
-}
-
-
-
-function closePhotoModal() {
-  photoModal.classList.remove('photo-modal_opened');
+function closePopup (element){
+    element.classList.remove('popup_opened');
 }
 
 function submitEditForm (evt) {
   evt.preventDefault();
   userName.textContent = formName.value; 
   profileDescription.textContent = formDescription.value;
-  closePopup();
+  closePopup(popupEditProfile);
 }
 
-function addPost (place, link) {
-  const post = postTemplate.cloneNode(true);
-  const postImage = post.querySelector('.post__image');
-  const postTitile = post.querySelector('.post__title');
-  const postLikeButton = post.querySelector('.post__like-button');
-  const postDeleteButton = post.querySelector('.post__delete');
-  postImage.src = link;
-  postImage.alt = place;
-  postTitile.textContent = place;
-  postImage.addEventListener('click', function openPhotoModal() {
-    photoModal.classList.add('photo-modal_opened');
-    modalImage.src = link;
-    modalImage.alt = place;
-    modalTitle.textContent = place;
-  });
-  postLikeButton.addEventListener('click', evt => evt.target.classList.toggle('post__like-button_active'));
-  postDeleteButton.addEventListener('click', () => {
-    const postToBeDeleted = postDeleteButton.closest('.post');
-    postToBeDeleted.remove();
-  })
-  postsList.prepend(post);
+function addPost (name, link) {
+  const postElement = postTemplate.cloneNode(true);
+  const postElementImage = postElement.querySelector('.post__image');
+  const postElementTitle = postElement.querySelector('.post__title');
+
+  postElementImage.src = link;
+  postElementImage.alt = name;
+  postElementTitle.textContent = name;
+  
+  return post = postElement; 
 }
 
 function submitAddPostForm (evt) {
   evt.preventDefault();
-  addPost(formPlace.value, formLink.value);
-  closePopup();  
+  addPost(formPlace.value, formLink.value); 
+  closePopup(popupAddPost);
+  postsList.prepend(post);
   formLink.value = '';
   formPlace.value = '';
 }
 
+initialPosts.forEach(place => { 
+  addPost(place.name, place.link);
+  postsList.append(post);
+});
 
+editButton.addEventListener('click', () => {
+  formName.value = userName.textContent;
+  formDescription.value = profileDescription.textContent;
+  openPopup(popupEditProfile);
+});
 
-initialPost.forEach(item => addPost(item['name'], item['link']));
-editButton.addEventListener('click', openEditPopup);
-popupCloseEditButton.addEventListener('click', closePopup);
-popupCloseAddPostButton.addEventListener('click', closePopup);
-modalCloseButton.addEventListener('click', closePhotoModal);
-addButton.addEventListener('click', openAddPostPopup);
+addButton.addEventListener('click', () => openPopup(popupAddPost));
+popupCloseEditButton.addEventListener('click', () => closePopup(popupEditProfile));
+popupCloseAddPostButton.addEventListener('click', () => closePopup(popupAddPost));
+popupClosePhotoButton.addEventListener('click', () => closePopup(popupPhoto));
 formEdit.addEventListener('submit', submitEditForm);
 formAddPost.addEventListener('submit',submitAddPostForm);
+
+document.addEventListener('click', (evt) => {
+  const target = evt.target;
+  const focusedPost = target.closest('.post');
+
+  if (target.classList.contains('post__image')) { 
+    const postImage = focusedPost.querySelector('.post__image');
+    const postTitle = focusedPost.querySelector('.post__title');
+    
+    modalImage.src = postImage.src;
+    modalImage.alt = postTitle.textContent;
+    modalTitle.textContent = postTitle.textContent;
+
+    openPopup(popupPhoto); 
+  }
+
+  if (target.classList.contains('post__delete')) {
+    post.remove(); 
+  }
+
+  if (target.classList.contains('post__like-button')) {
+    target.classList.toggle('post__like-button_active');
+  }
+});

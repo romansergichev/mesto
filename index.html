@@ -8,15 +8,12 @@
 </head>
 <body class="body">
   <div class="root">
-
     <header class="header">
       <a href="#" class="header__logo-link">
         <img src="./images/icons/mesto-logo.svg" alt="Логотип Место" class="header__logo opacity">
       </a>
     </header>
-    
     <main class="main">
-
       <section class="profile">
         <img src="./images/profile-pic.jpg" alt="Аватар профиля" class="profile__avatar">
         <div class="profile__info">
@@ -30,17 +27,14 @@
         </div>
         <button type="button" class="profile__add-button opacity"></button>
       </section>
-
       <section class="posts">
         <ul class="posts__list">
         </ul>
       </section>
-
-    </main>
-         
+    </main>    
     <div class="popup popup_type_edit">
       <div class="popup__container">
-        <button type="button" class="popup__close-button opacity"></button>
+        <button type="button" class="popup__close-button popup__close-button_type_edit opacity"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <form name="edit-form" class="popup__form popup__form_type_edit">
           <input name="profile-name" type="text" class="popup__input popup__input_type_name">
@@ -49,10 +43,9 @@
         </form>
       </div>
     </div>
-
     <div class="popup popup_type_add-post">
       <div class="popup__container popup__container_size_s">
-        <button type="button" class="popup__close-button popup__close-button_position_corner opacity"></button>
+        <button type="button" class="popup__close-button popup__close-button_type_add-post popup__close-button_position_corner opacity"></button>
         <h2 class="popup__title popup__title_margin">Новое место</h2>
         <form name="add-post-form" class="popup__form popup__form_type_add-post">
           <input name="new-place" type="text" placeholder="Название" class="popup__input popup__input_type_place">
@@ -61,17 +54,13 @@
         </form>
       </div>
     </div>
-
-    <div class="photo-modal">
-      <div class="photo-modal__container">
-        <button type="button" class="photo-modal__close-button opacity"></button>
-        <img src="#" alt="#" class="photo-modal__image">
-        <h4 class="photo-modal__title"></h4>
+    <div class="popup popup_type_photo background-opacity">
+      <div class="popup__photo-container popup__photo-container">
+        <button type="button" class="popup__close-button popup__close-button_type_photo popup__close-button_position_corner opacity"></button>
+        <img src="#" alt="#" class="popup__post-image">
+        <h4 class="popup__post-title"></h4>
       </div>
     </div>
-
-    
-
     <footer class="footer">
       <p class="footer__text">&copy; 2020 Mesto Russia</p>
     </footer>
