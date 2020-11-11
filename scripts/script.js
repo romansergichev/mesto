@@ -61,6 +61,15 @@ function submitEditForm (evt) {
   closePopup(popupEditProfile);
 }
 
+function openPhotoPopup (image, title) {
+    image.addEventListener('click', () => {
+    modalImage.src = image.src;
+    modalImage.alt = title.textContent;
+    modalTitle.textContent = title.textContent;
+    openPopup(popupPhoto);
+  });
+}
+
 function addPost (name, link) {
   const postElement = postTemplate.cloneNode(true);
   const postElementImage = postElement.querySelector('.post__image');
@@ -69,6 +78,7 @@ function addPost (name, link) {
   postElementImage.src = link;
   postElementImage.alt = name;
   postElementTitle.textContent = name;
+  openPhotoPopup(postElementImage, postElementTitle);
   
   return post = postElement; 
 }
@@ -103,17 +113,6 @@ formAddPost.addEventListener('submit',submitAddPostForm);
 document.addEventListener('click', (evt) => {
   const target = evt.target;
   const focusedPost = target.closest('.post');
-
-  if (target.classList.contains('post__image')) { 
-    const postImage = focusedPost.querySelector('.post__image');
-    const postTitle = focusedPost.querySelector('.post__title');
-    
-    modalImage.src = postImage.src;
-    modalImage.alt = postTitle.textContent;
-    modalTitle.textContent = postTitle.textContent;
-
-    openPopup(popupPhoto); 
-  }
 
   if (target.classList.contains('post__delete')) {
     focusedPost.remove(); 
