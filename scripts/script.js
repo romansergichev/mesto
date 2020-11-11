@@ -116,7 +116,7 @@ document.addEventListener('click', (evt) => {
   }
 
   if (target.classList.contains('post__delete')) {
-    post.remove(); 
+    focusedPost.remove(); 
   }
 
   if (target.classList.contains('post__like-button')) {
