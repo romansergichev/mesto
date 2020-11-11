@@ -44,7 +44,6 @@ const modalImage = document.querySelector('.popup__post-image');
 const modalTitle = document.querySelector('.popup__post-title');
 const postsList = document.querySelector('.posts__list');
 const postTemplate = document.querySelector('#post-template').content;
-let post = '';
 
 function openPopup (element){
     element.classList.add('popup_opened');
@@ -62,38 +61,50 @@ function submitEditForm (evt) {
 }
 
 function openPhotoPopup (image, title) {
-    image.addEventListener('click', () => {
-    modalImage.src = image.src;
-    modalImage.alt = title.textContent;
-    modalTitle.textContent = title.textContent;
-    openPopup(popupPhoto);
-  });
+  modalImage.src = image;
+  modalImage.alt = title;
+  modalTitle.textContent = title;
+  openPopup(popupPhoto);
+}
+
+function toggleLikeButton (likeButton) {
+  likeButton.addEventListener('click', () => likeButton.classList.toggle('post__like-button_active'));
+}
+
+function deletePost (deleteButton) {
+  deleteButton.addEventListener('click', () => deleteButton.closest('.post').remove());
 }
 
 function addPost (name, link) {
-  const postElement = postTemplate.cloneNode(true);
-  const postElementImage = postElement.querySelector('.post__image');
-  const postElementTitle = postElement.querySelector('.post__title');
+  const post = postTemplate.cloneNode(true);
+  const postImage = post.querySelector('.post__image');
+  const postTitle = post.querySelector('.post__title');
+  const postLikeButton = post.querySelector('.post__like-button');
+  const postDeleteButton = post.querySelector('.post__delete');
 
-  postElementImage.src = link;
-  postElementImage.alt = name;
-  postElementTitle.textContent = name;
-  openPhotoPopup(postElementImage, postElementTitle);
+  postImage.src = link;
+  postImage.alt = name;
+  postTitle.textContent = name;
+  postImage.addEventListener('click', () => openPhotoPopup(link, name));
+  toggleLikeButton(postLikeButton);
+  deletePost(postDeleteButton);
   
-  return post = postElement; 
+  return post;
 }
 
 function submitAddPostForm (evt) {
   evt.preventDefault();
-  addPost(formPlace.value, formLink.value); 
-  closePopup(popupAddPost);
+  addPost(formPlace.value, formLink.value);
+  const post = addPost(formPlace.value, formLink.value);
   postsList.prepend(post);
+  closePopup(popupAddPost);
   formLink.value = '';
   formPlace.value = '';
 }
 
-initialPosts.forEach(place => { 
+initialPosts.forEach(place => {
   addPost(place.name, place.link);
+  const post = addPost(place.name, place.link);
   postsList.append(post);
 });
 
@@ -109,16 +120,3 @@ popupCloseAddPostButton.addEventListener('click', () => closePopup(popupAddPost)
 popupClosePhotoButton.addEventListener('click', () => closePopup(popupPhoto));
 formEdit.addEventListener('submit', submitEditForm);
 formAddPost.addEventListener('submit',submitAddPostForm);
-
-document.addEventListener('click', (evt) => {
-  const target = evt.target;
-  const focusedPost = target.closest('.post');
-
-  if (target.classList.contains('post__delete')) {
-    focusedPost.remove(); 
-  }
-
-  if (target.classList.contains('post__like-button')) {
-    target.classList.toggle('post__like-button_active');
-  }
-});
