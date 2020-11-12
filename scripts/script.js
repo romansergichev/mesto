@@ -94,7 +94,6 @@ function addPost (name, link) {
 
 function submitAddPostForm (evt) {
   evt.preventDefault();
-  addPost(formPlace.value, formLink.value);
   const post = addPost(formPlace.value, formLink.value);
   postsList.prepend(post);
   closePopup(popupAddPost);
@@ -103,7 +102,6 @@ function submitAddPostForm (evt) {
 }
 
 initialPosts.forEach(place => {
-  addPost(place.name, place.link);
   const post = addPost(place.name, place.link);
   postsList.append(post);
 });
