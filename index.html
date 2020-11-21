@@ -38,11 +38,24 @@
         <h2 class="popup__title">Редактировать профиль</h2>
         <form name="edit-form" class="popup__form popup__form_type_edit" novalidate>
           <label class="popup__form-field">
-            <input name="profile-name" type="text" id="profile-name-input" class="popup__input popup__input_type_name" minlength="2" maxlength="40" required>
+            <input 
+              name="profile-name" 
+              type="text" 
+              id="profile-name-input" 
+              class="popup__input popup__input_type_name" 
+              minlength="2" maxlength="40" 
+              required
+            >
             <span class="popup__input-error" id="profile-name-input-error"></span>
           </label>
           <label class="popup__form-field">
-            <input name="profile-description" type="text" id="profile-description-input" class="popup__input popup__input_type_description" minlength="2" maxlength="200" required>
+            <input 
+              name="profile-description" 
+              type="text" id="profile-description-input" 
+              class="popup__input popup__input_type_description" 
+              minlength="2" maxlength="200" 
+              required
+            >
             <span class="popup__input-error" id="profile-description-input-error"></span>
           </label>
           <button type="submit" class="popup__submit-button">Сохранить</button>
@@ -53,9 +66,27 @@
       <div class="popup__container popup__container_size_s">
         <button type="button" class="popup__close-button popup__close-button_type_add-post popup__close-button_position_corner opacity"></button>
         <h2 class="popup__title popup__title_margin">Новое место</h2>
-        <form name="add-post-form" class="popup__form popup__form_type_add-post">
-          <input name="new-place" type="text" placeholder="Название" class="popup__input popup__input_type_place">
-          <input name="place-link" type="text" placeholder="Ссылка на картинку" class="popup__input popup__input_type_link">
+        <form name="add-post-form" class="popup__form popup__form_type_add-post" novalidate>
+          <label class="popup__form-field">
+            <input 
+              name="new-place" 
+              type="text" 
+              id="new-place-input"
+              placeholder="Название" 
+              class="popup__input popup__input_type_place"
+            >
+            <span class="popup__input-error" id="new-place-input-error"></span>
+          </label>
+          <label class="popup__form-field">
+            <input 
+              name="place-link" 
+              type="url" 
+              id="place-link-input"
+              placeholder="Ссылка на картинку" 
+              class="popup__input popup__input_type_link"
+            >
+            <span class="popup__input-error" id="place-link-input-error"></span>
+          </label>         
           <button type="submit" class="popup__submit-button">Создать</button>
         </form>
       </div>
