@@ -53,8 +53,7 @@ function closePopup (element){
     element.classList.remove('popup_opened');
 }
 
-function submitEditForm (evt) {
-  evt.preventDefault();
+function submitEditForm () {
   userName.textContent = formName.value; 
   profileDescription.textContent = formDescription.value;
   closePopup(popupEditProfile);
@@ -92,13 +91,11 @@ function addPost (name, link) {
   return post;
 }
 
-function submitAddPostForm (evt) {
-  evt.preventDefault();
+function submitAddPostForm () {
   const post = addPost(formPlace.value, formLink.value);
   postsList.prepend(post);
   closePopup(popupAddPost);
-  formLink.value = '';
-  formPlace.value = '';
+  formAddPost.reset();
 }
 
 initialPosts.forEach(place => {
