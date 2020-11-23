@@ -65,7 +65,7 @@ function closePopup (popupElement) {
 }
 
 const closeOnEscape = (evt) => {
-  if(document.key === 'Escape') {
+  if(evt.key === 'Escape') {
     popupList.forEach(popup => closePopup(popup));
   }
 }
