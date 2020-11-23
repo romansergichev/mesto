@@ -75,17 +75,13 @@ function closePopup (popupElement) {
   popupElement.classList.remove('popup_opened');
   popupElement.removeEventListener('mousedown', closeOnMousedown);
 
-  if (!popupElement.classList.contains('popup_type_photo')) {
-    hideValidationErrors(popupElement);
-    diasbleSubmitButton(popupElement);
-  }
-
   document.removeEventListener('keydown',closeOnEscape);
 }
 
 const closeOnEscape = evt => {
   if(evt.key === 'Escape') {
-    popupList.forEach(popup => closePopup(popup));
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   }
 }
 
@@ -108,15 +104,15 @@ function openPhotoPopup (image, title) {
   openPopup(popupPhoto);
 }
 
-function toggleLikeButton (likeButton) {
+function addLikeListener (likeButton) {
   likeButton.addEventListener('click', () => likeButton.classList.toggle('post__like-button_active'));
 }
 
-function deletePost (deleteButton) {
+function addDeleteListener (deleteButton) {
   deleteButton.addEventListener('click', () => deleteButton.closest('.post').remove());
 }
 
-function addPost (name, link) {
+function createPost (name, link) {
   const post = postTemplate.cloneNode(true);
   const postImage = post.querySelector('.post__image');
   const postTitle = post.querySelector('.post__title');
@@ -129,31 +125,37 @@ function addPost (name, link) {
 
   postImage.addEventListener('click', () => openPhotoPopup(link, name));
   
-  toggleLikeButton(postLikeButton);
-  deletePost(postDeleteButton);
+  addLikeListener(postLikeButton);
+  addDeleteListener(postDeleteButton);
   
   return post;
 }
 
 function submitAddPostForm () {
-  const post = addPost(formPlace.value, formLink.value);
+  const post = createPost(formPlace.value, formLink.value);
   postsList.prepend(post);
   closePopup(popupAddPost);
   formAddPost.reset();
 }
 
 initialPosts.forEach(place => {
-  const post = addPost(place.name, place.link);
+  const post = createPost(place.name, place.link);
   postsList.append(post);
 });
 
 editButton.addEventListener('click', () => {
   formName.value = userName.textContent;
   formDescription.value = profileDescription.textContent;
+  hideValidationErrors(popupEditProfile);
+  diasbleSubmitButton(popupEditProfile);
   openPopup(popupEditProfile);
 });
 
-addButton.addEventListener('click', () => openPopup(popupAddPost));
+addButton.addEventListener('click', () => {
+  hideValidationErrors(popupAddPost);
+  diasbleSubmitButton(popupAddPost);
+  openPopup(popupAddPost);
+});
 popupCloseEditButton.addEventListener('click', () => closePopup(popupEditProfile));
 popupCloseAddPostButton.addEventListener('click', () => closePopup(popupAddPost));
 popupClosePhotoButton.addEventListener('click', () => closePopup(popupPhoto));
