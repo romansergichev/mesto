@@ -29,7 +29,7 @@ const userName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const editButton = document.querySelector('.profile__edit');
 const addButton = document.querySelector('.profile__add-button');
-const popupLIst = document.querySelectorAll('.popup');
+const popupList = document.querySelectorAll('.popup');
 const popupEditProfile = document.querySelector('.popup_type_edit');
 const popupAddPost = document.querySelector('.popup_type_add-post');
 const popupCloseEditButton = document.querySelector('.popup__close-button_type_edit');
@@ -58,21 +58,15 @@ function openPopup (popupElement) {
 }
 
 function closePopup (popupElement) {
-  const popupInputs = popupElement.querySelectorAll('.popup__input');
-  const inputErrors = popupElement.querySelectorAll('.popup__input-error');
-
   popupElement.classList.remove('popup_opened');
 
   popupElement.removeEventListener('mousedown', closeOnMousedown);
   document.removeEventListener('keydown',closeOnEscape);
-
-  hideValidationErrors(inputErrors, popupInputs);
-  diasbleSubmitButtons(submitButtons);
 }
 
 const closeOnEscape = (evt) => {
-  if(evt.key === 'Escape') {
-    popupLIst.forEach(popup => closePopup(popup));
+  if(document.key === 'Escape') {
+    popupList.forEach(popup => closePopup(popup));
   }
 }
 
@@ -122,16 +116,20 @@ function addPost (name, link) {
   return post;
 }
 
-const hideValidationErrors = (inputErrors, inputs) => {
+const hideValidationErrors = (popupElement) => {
+  const popupInputs = popupElement.querySelectorAll('.popup__input');
+  const inputErrors = popupElement.querySelectorAll('.popup__input-error');
+
   inputErrors.forEach(inputError => {
     inputError.classList.remove('popup__input-error_active');
     inputError.textContent = '';
   });
-  inputs.forEach(input => input.classList.remove('popup__input_type_error'));
+  popupInputs.forEach(input => input.classList.remove('popup__input_type_error'));
 }
 
-const diasbleSubmitButtons =  (submitButtons) => {
-  submitButtons.forEach( submitButton => submitButton.classList.add('popup__submit-button_disabled'));
+const diasbleSubmitButton =  (popupElement) => {
+  const submitButton = popupElement.querySelector('.popup__submit-button');
+  submitButton.classList.add('popup__submit-button_disabled');
 }
 
 function submitAddPostForm () {
@@ -153,8 +151,16 @@ editButton.addEventListener('click', () => {
 });
 
 addButton.addEventListener('click', () => openPopup(popupAddPost));
-popupCloseEditButton.addEventListener('click', () => closePopup(popupEditProfile));
-popupCloseAddPostButton.addEventListener('click', () => closePopup(popupAddPost));
+popupCloseEditButton.addEventListener('click', () => { 
+  closePopup(popupEditProfile);
+  hideValidationErrors(popupEditProfile);
+  diasbleSubmitButton(popupEditProfile);
+});
+popupCloseAddPostButton.addEventListener('click', () => { 
+  closePopup(popupAddPost)
+  hideValidationErrors(popupAddPost);
+  diasbleSubmitButton(popupAddPost);
+});
 popupClosePhotoButton.addEventListener('click', () => closePopup(popupPhoto));
 formEdit.addEventListener('submit', submitEditForm);
 formAddPost.addEventListener('submit',submitAddPostForm);
