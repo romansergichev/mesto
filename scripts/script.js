@@ -1,3 +1,5 @@
+import { Post } from './post.js';
+
 const initialPosts = [
   {
       name: 'Архыз',
@@ -29,7 +31,6 @@ const userName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const editButton = document.querySelector('.profile__edit');
 const addButton = document.querySelector('.profile__add-button');
-const popupList = document.querySelectorAll('.popup');
 const popupEditProfile = document.querySelector('.popup_type_edit');
 const popupAddPost = document.querySelector('.popup_type_add-post');
 const popupCloseEditButton = document.querySelector('.popup__close-button_type_edit');
@@ -42,10 +43,8 @@ const formAddPost = document.querySelector('.popup__form_type_add-post');
 const formPlace = document.querySelector('.popup__input_type_place');
 const formLink = document.querySelector('.popup__input_type_link');
 const popupPhoto = document.querySelector('.popup_type_photo');
-const modalImage = document.querySelector('.popup__post-image');
-const modalTitle = document.querySelector('.popup__post-title');
 const postsList = document.querySelector('.posts__list');
-const postTemplate = document.querySelector('#post-template').content;
+
 
 
 
@@ -62,19 +61,21 @@ const hideValidationErrors = (popupElement) => {
 
 const diasbleSubmitButton =  (popupElement) => {
   const submitButton = popupElement.querySelector('.popup__submit-button');
+
   submitButton.classList.add('popup__submit-button_disabled');
 }
 
 function openPopup (popupElement) {
   popupElement.classList.add('popup_opened');
+
   popupElement.addEventListener('mousedown', closeOnMousedown);
   document.addEventListener('keydown',  closeOnEscape);
 }
 
 function closePopup (popupElement) {
   popupElement.classList.remove('popup_opened');
-  popupElement.removeEventListener('mousedown', closeOnMousedown);
 
+  popupElement.removeEventListener('mousedown', closeOnMousedown);
   document.removeEventListener('keydown',closeOnEscape);
 }
 
@@ -94,58 +95,34 @@ const closeOnMousedown = evt => {
 function submitEditForm () {
   userName.textContent = formName.value; 
   profileDescription.textContent = formDescription.value;
+
   closePopup(popupEditProfile);
 }
 
-function openPhotoPopup (image, title) {
-  modalImage.src = image;
-  modalImage.alt = title;
-  modalTitle.textContent = title;
-  openPopup(popupPhoto);
-}
-
-function addLikeListener (likeButton) {
-  likeButton.addEventListener('click', () => likeButton.classList.toggle('post__like-button_active'));
-}
-
-function addDeleteListener (deleteButton) {
-  deleteButton.addEventListener('click', () => deleteButton.closest('.post').remove());
-}
-
-function createPost (name, link) {
-  const post = postTemplate.cloneNode(true);
-  const postImage = post.querySelector('.post__image');
-  const postTitle = post.querySelector('.post__title');
-  const postLikeButton = post.querySelector('.post__like-button');
-  const postDeleteButton = post.querySelector('.post__delete');
-
-  postImage.src = link;
-  postImage.alt = name;
-  postTitle.textContent = name;
-
-  postImage.addEventListener('click', () => openPhotoPopup(link, name));
-  
-  addLikeListener(postLikeButton);
-  addDeleteListener(postDeleteButton);
-  
-  return post;
-}
-
 function submitAddPostForm () {
-  const post = createPost(formPlace.value, formLink.value);
-  postsList.prepend(post);
+  const postData = {
+    name: formPlace.value,
+    link: formLink.value
+  }
+  const post = new Post(postData);
+  const postElement = post.generateNewPost();
+
+  postsList.prepend(postElement);
   closePopup(popupAddPost);
   formAddPost.reset();
 }
 
 initialPosts.forEach(place => {
-  const post = createPost(place.name, place.link);
-  postsList.append(post);
+  const post = new Post(place);
+  const postElement = post.generateNewPost();
+
+  postsList.append(postElement);
 });
 
 editButton.addEventListener('click', () => {
   formName.value = userName.textContent;
   formDescription.value = profileDescription.textContent;
+
   hideValidationErrors(popupEditProfile);
   diasbleSubmitButton(popupEditProfile);
   openPopup(popupEditProfile);
@@ -156,8 +133,11 @@ addButton.addEventListener('click', () => {
   diasbleSubmitButton(popupAddPost);
   openPopup(popupAddPost);
 });
+
 popupCloseEditButton.addEventListener('click', () => closePopup(popupEditProfile));
 popupCloseAddPostButton.addEventListener('click', () => closePopup(popupAddPost));
 popupClosePhotoButton.addEventListener('click', () => closePopup(popupPhoto));
 formEdit.addEventListener('submit', submitEditForm);
 formAddPost.addEventListener('submit',submitAddPostForm);
+
+export { openPopup, popupPhoto }
