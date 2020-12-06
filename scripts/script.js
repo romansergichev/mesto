@@ -44,9 +44,7 @@ const formPlace = document.querySelector('.popup__input_type_place');
 const formLink = document.querySelector('.popup__input_type_link');
 const popupPhoto = document.querySelector('.popup_type_photo');
 const postsList = document.querySelector('.posts__list');
-
-
-
+const postTemplate = document.querySelector('#post-template').content;
 
 const hideValidationErrors = (popupElement) => {
   const popupInputs = popupElement.querySelectorAll('.popup__input');
@@ -113,7 +111,8 @@ function submitAddPostForm () {
 }
 
 initialPosts.forEach(place => {
-  const post = new Post(place);
+  const newPostTemplate = postTemplate.querySelector('.post').cloneNode(true);
+  const post = new Post(place, newPostTemplate);
   const postElement = post.generateNewPost();
 
   postsList.append(postElement);
