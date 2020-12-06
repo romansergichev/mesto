@@ -3,8 +3,6 @@ import { openPopup, popupPhoto } from './script.js';
 const modalImage = document.querySelector('.popup__post-image');
 const modalTitle = document.querySelector('.popup__post-title');
 
-
-
 class Post {
   constructor(data, template) {
     this._name = data.name;

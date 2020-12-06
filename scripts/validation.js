@@ -1,14 +1,3 @@
-const selectors = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit-button',
-  inactiveButtonClass: 'popup__submit-button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-}
-
-const formList = Array.from(document.querySelectorAll(selectors['formSelector']));
-
 class EnableValidation {
   constructor(selectors, form) {
     this._selectors = selectors
@@ -75,7 +64,4 @@ class EnableValidation {
   }
 }
 
-formList.forEach(form => {
-  const formElement = new EnableValidation(selectors, form);
-  formElement.enableValidation();
-});
+export { EnableValidation }

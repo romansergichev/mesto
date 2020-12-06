@@ -1,4 +1,5 @@
 import { Post } from './post.js';
+import { EnableValidation } from './validation.js';
 
 const initialPosts = [
   {
@@ -27,6 +28,15 @@ const initialPosts = [
   }
 ];
 
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit-button',
+  inactiveButtonClass: 'popup__submit-button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+}
+
 const userName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const editButton = document.querySelector('.profile__edit');
@@ -36,6 +46,7 @@ const popupAddPost = document.querySelector('.popup_type_add-post');
 const popupCloseEditButton = document.querySelector('.popup__close-button_type_edit');
 const popupCloseAddPostButton = document.querySelector('.popup__close-button_type_add-post');
 const popupClosePhotoButton = document.querySelector('.popup__close-button_type_photo');
+const formList = Array.from(document.querySelectorAll('.popup__form'));
 const formEdit = document.querySelector('.popup__form_type_edit');
 const formName = document.querySelector('.popup__input_type_name');
 const formDescription = document.querySelector('.popup__input_type_description');
@@ -138,5 +149,10 @@ popupCloseAddPostButton.addEventListener('click', () => closePopup(popupAddPost)
 popupClosePhotoButton.addEventListener('click', () => closePopup(popupPhoto));
 formEdit.addEventListener('submit', submitEditForm);
 formAddPost.addEventListener('submit',submitAddPostForm);
+
+formList.forEach(form => {
+  const formElement = new EnableValidation(validationConfig, form);
+  formElement.enableValidation();
+});
 
 export { openPopup, popupPhoto }
