@@ -1,4 +1,4 @@
-import { Post } from './Post.js';
+import { Post } from './GeneratePost.js';
 import { EnableValidation } from './EnableValidation.js';
 
 const initialPosts = [
