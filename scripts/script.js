@@ -1,5 +1,5 @@
-import { Post } from './post.js';
-import { EnableValidation } from './validation.js';
+import { Post } from './Post.js';
+import { EnableValidation } from './EnableValidation.js';
 
 const initialPosts = [
   {
