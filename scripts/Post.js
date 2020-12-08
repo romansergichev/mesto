@@ -7,14 +7,27 @@ class Post {
   constructor(data, template) {
     this._name = data.name;
     this._link = data.link;
-    this._post = template;
+    this._templateSelector = template;
+  }
+
+  _getTemplate () {
+    const postTemplate = document
+    .querySelector('#post-template')
+    .content.querySelector('.post')
+    .cloneNode(true);
+
+    return postTemplate;
   }
 
   generateNewPost () {
+    this._post = this._getTemplate();
+    const postImage = this._post.querySelector('.post__image');
+
     this._serListeners();
 
-    this._post.querySelector('.post__image').src = this._link;
-    this._post.querySelector('.post__image').alt = this._name;
+    postImage.src = this._link;
+    postImage.alt = this._name;
+
     this._post.querySelector('.post__title').textContent = this._name;
 
     return this._post;
@@ -38,7 +51,8 @@ class Post {
   }
 
   _delete () {
-    this._post.querySelector('.post__delete').closest('.post').remove();
+    this._post.remove();
+    this._post = null;
   }
 }
 

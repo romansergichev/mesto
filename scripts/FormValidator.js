@@ -1,4 +1,4 @@
-class EnableValidation {
+class FormValidator {
   constructor(selectors, form) {
     this._selectors = selectors
     this._form = form
@@ -36,9 +36,11 @@ class EnableValidation {
   _toggleButtonState(inputList, buttonElement, selectors) {
     if (this._hasInvalidInput(inputList)) {
       buttonElement.classList.add(selectors['inactiveButtonClass']);
+      buttonElement.setAttribute('disabled', true);
     }
     else {
       buttonElement.classList.remove(selectors['inactiveButtonClass']);
+      buttonElement.removeAttribute('disabled', true);
     }
   } 
 
@@ -62,6 +64,14 @@ class EnableValidation {
     });
     this._setEventListeners(this._form, this._selectors);
   }
+
+  resetValidation() {
+    const inputs = Array.from(this._form.querySelectorAll(this._selectors['inputSelector']));
+    const submitButton = this._form.querySelector(this._selectors['submitButtonSelector']);
+
+    inputs.forEach(input => this._hideError(this._form, input, this._selectors));
+    this._toggleButtonState(inputs, submitButton, this._selectors);
+  }
 }
 
-export { EnableValidation }
+export { FormValidator }
