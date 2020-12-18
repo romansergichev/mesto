@@ -2,6 +2,7 @@ import { Post } from '../components/Post.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { initialPosts, validationConfig } from '../utils/data.js';
 import Section from '../components/Section.js';
+import { Popup } from '../components/Popup.js';
 
 const userName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
@@ -32,19 +33,21 @@ const initialPostsList = new Section({
   }
 }, '.posts__list');
 
-function openPopup (popupElement) {
-  popupElement.classList.add('popup_opened');
+const popup = new Popup('.popup');
 
-  popupElement.addEventListener('mousedown', closeOnMousedown);
-  document.addEventListener('keydown',  closeOnEscape);
-}
+// function openPopup (popupElement) {
+//   popupElement.classList.add('popup_opened');
 
-function closePopup (popupElement) {
-  popupElement.classList.remove('popup_opened');
+//   popupElement.addEventListener('mousedown', closeOnMousedown);
+//   document.addEventListener('keydown',  closeOnEscape);
+// }
 
-  popupElement.removeEventListener('mousedown', closeOnMousedown);
-  document.removeEventListener('keydown',closeOnEscape);
-}
+// function closePopup (popupElement) {
+//   popupElement.classList.remove('popup_opened');
+
+//   popupElement.removeEventListener('mousedown', closeOnMousedown);
+//   document.removeEventListener('keydown',closeOnEscape);
+// }
 
 const closeOnEscape = evt => {
   if(evt.key === 'Escape') {
@@ -93,17 +96,18 @@ editButton.addEventListener('click', () => {
   formDescription.value = profileDescription.textContent;
 
   editFormValidator.resetValidation();
-  openPopup(popupEditProfile);
+  popup.open();
+  popup.setEventListeners();
 });
 
 addButton.addEventListener('click', () => {
   addFormValidator.resetValidation();
-  openPopup(popupAddPost);
+  // openPopup(popupAddPost);
 });
 
-popupCloseEditButton.addEventListener('click', () => closePopup(popupEditProfile));
-popupCloseAddPostButton.addEventListener('click', () => closePopup(popupAddPost));
-popupClosePhotoButton.addEventListener('click', () => closePopup(popupPhoto));
+// popupCloseEditButton.addEventListener('click', () => popup.close());
+// popupCloseAddPostButton.addEventListener('click', () => closePopup(popupAddPost));
+// popupClosePhotoButton.addEventListener('click', () => closePopup(popupPhoto));
 formEdit.addEventListener('submit', submitEditForm);
 formAddPost.addEventListener('submit',submitAddPostForm);
 
@@ -112,4 +116,4 @@ addFormValidator.enableValidation();
 
 initialPostsList.renderPosts();
 
-export { openPopup, popupPhoto }
+export { popupPhoto }

@@ -1,4 +1,4 @@
-import { openPopup, popupPhoto } from '../pages/index.js';
+import { popupPhoto } from '../pages/index.js';
 
 const modalImage = document.querySelector('.popup__post-image');
 const modalTitle = document.querySelector('.popup__post-title');
@@ -47,7 +47,7 @@ class Post {
     modalImage.src = this._link;
     modalImage.alt = this._name;
     modalTitle.textContent = this._name;
-    openPopup(popupPhoto);
+    // openPopup(popupPhoto);
   }
 
   _delete () {
