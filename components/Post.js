@@ -1,4 +1,4 @@
-import { openPopup, popupPhoto } from './script.js';
+import { openPopup, popupPhoto } from '../pages/index.js';
 
 const modalImage = document.querySelector('.popup__post-image');
 const modalTitle = document.querySelector('.popup__post-title');

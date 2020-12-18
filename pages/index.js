@@ -1,7 +1,7 @@
-import { Post } from './Post.js';
-import { FormValidator } from './FormValidator.js';
-import { initialPosts, validationConfig } from './data.js';
-
+import { Post } from '../components/Post.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { initialPosts, validationConfig } from '../utils/data.js';
+import Section from '../components/Section.js';
 
 const userName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
@@ -22,6 +22,15 @@ const popupPhoto = document.querySelector('.popup_type_photo');
 const postsList = document.querySelector('.posts__list');
 const editFormValidator = new FormValidator(validationConfig, formEdit);
 const addFormValidator = new FormValidator(validationConfig, formAddPost);
+
+
+const initialPostsList = new Section({
+  items: initialPosts,
+  renderer: (item) => {
+    const post = getPost(item, '#post-template')
+    initialPostsList.appendItem(post);
+  }
+}, '.posts__list');
 
 function openPopup (popupElement) {
   popupElement.classList.add('popup_opened');
@@ -75,9 +84,9 @@ function submitAddPostForm () {
   formAddPost.reset();
 }
 
-initialPosts.forEach(place => {
-  postsList.append(getPost(place, '#post-template'));
-});
+// initialPosts.forEach(place => {
+//   postsList.append(getPost(place, '#post-template'));
+// });
 
 editButton.addEventListener('click', () => {
   formName.value = userName.textContent;
@@ -100,5 +109,7 @@ formAddPost.addEventListener('submit',submitAddPostForm);
 
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
+
+initialPostsList.renderPosts();
 
 export { openPopup, popupPhoto }
