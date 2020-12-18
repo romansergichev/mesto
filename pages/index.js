@@ -2,7 +2,8 @@ import { Post } from '../components/Post.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { initialPosts, validationConfig } from '../utils/data.js';
 import Section from '../components/Section.js';
-import { Popup } from '../components/Popup.js';
+import  Popup  from '../components/Popup.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 
 const userName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
@@ -35,6 +36,8 @@ const initialPostsList = new Section({
 
 const popup = new Popup('.popup');
 
+
+
 // function openPopup (popupElement) {
 //   popupElement.classList.add('popup_opened');
 
@@ -49,18 +52,18 @@ const popup = new Popup('.popup');
 //   document.removeEventListener('keydown',closeOnEscape);
 // }
 
-const closeOnEscape = evt => {
-  if(evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup);
-  }
-}
+// const closeOnEscape = evt => {
+//   if(evt.key === 'Escape') {
+//     const openedPopup = document.querySelector('.popup_opened');
+//     closePopup(openedPopup);
+//   }
+// }
 
-const closeOnMousedown = evt => {
-  if(evt.target.classList.contains('popup')) {
-    closePopup(evt.target);
-  }
-}
+// const closeOnMousedown = evt => {
+//   if(evt.target.classList.contains('popup')) {
+//     closePopup(evt.target);
+//   }
+// }
 
 function submitEditForm () {
   userName.textContent = formName.value; 
@@ -116,4 +119,10 @@ addFormValidator.enableValidation();
 
 initialPostsList.renderPosts();
 
-export { popupPhoto }
+document.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('post__image')) {
+    const popupWithImage = new PopupWithImage(evt.target, '.popup_type_photo');
+    popupWithImage.open();
+    popupWithImage.setEventListeners();
+  }
+})

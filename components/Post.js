@@ -1,4 +1,4 @@
-import { popupPhoto } from '../pages/index.js';
+// import { popupPhoto } from '../pages/index.js';
 
 const modalImage = document.querySelector('.popup__post-image');
 const modalTitle = document.querySelector('.popup__post-title');
@@ -36,19 +36,19 @@ class Post {
   _serListeners () {
     this._post.querySelector('.post__like-button').addEventListener('click', () => this._like());
     this._post.querySelector('.post__delete').addEventListener('click', () => this._delete());
-    this._post.querySelector('.post__image').addEventListener('click', () => this._openPhotoPopup());
+    // this._post.querySelector('.post__image').addEventListener('click', () => this._handle());
   }
 
   _like () {
     this._post.querySelector('.post__like-button').classList.toggle('post__like-button_active');
   }
 
-  _openPhotoPopup () {
-    modalImage.src = this._link;
-    modalImage.alt = this._name;
-    modalTitle.textContent = this._name;
-    // openPopup(popupPhoto);
-  }
+  // _openPhotoPopup () {
+  //   modalImage.src = this._link;
+  //   modalImage.alt = this._name;
+  //   modalTitle.textContent = this._name;
+  //   openPopup(popupPhoto);
+  // }
 
   _delete () {
     this._post.remove();
