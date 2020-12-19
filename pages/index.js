@@ -5,6 +5,8 @@ import Section from '../components/Section.js';
 import  Popup  from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
+
 
 const userName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
@@ -26,6 +28,9 @@ const postsList = document.querySelector('.posts__list');
 const editFormValidator = new FormValidator(validationConfig, formEdit);
 const addFormValidator = new FormValidator(validationConfig, formAddPost);
 
+const userInfo = new UserInfo('.profile__name', '.profile__description')
+const userData = userInfo.getUserInfo();
+console.log(userInfo.getUserInfo());
 
 const initialPostsList = new Section({
   items: initialPosts,
@@ -37,8 +42,9 @@ const initialPostsList = new Section({
 
 const popupEdit = new PopupWithForm({ 
     submiter: () => {
-      userName.textContent = formName.value; 
-      profileDescription.textContent = formDescription.value;
+      userInfo.setUserInfo(formName.value, formDescription.value)
+      // userData.name = formName.value; 
+      // userData.description = formDescription.value;
       popupEdit.close();
     },
   },'.popup_type_edit');
@@ -110,8 +116,8 @@ function submitAddPostForm () {
 // });
 
 editButton.addEventListener('click', () => {
-  formName.value = userName.textContent;
-  formDescription.value = profileDescription.textContent;
+  formName.value = userData.name;
+  formDescription.value = userData.description;
 
   editFormValidator.resetValidation();
   popupEdit.open();
