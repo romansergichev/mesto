@@ -4,10 +4,11 @@ const modalImage = document.querySelector('.popup__post-image');
 const modalTitle = document.querySelector('.popup__post-title');
 
 class Post {
-  constructor(data, template) {
+  constructor({data, handleImageClick}, template) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = template;
+    this._handleImageClick = handleImageClick;
   }
 
   _getTemplate () {
@@ -36,7 +37,7 @@ class Post {
   _serListeners () {
     this._post.querySelector('.post__like-button').addEventListener('click', () => this._like());
     this._post.querySelector('.post__delete').addEventListener('click', () => this._delete());
-    // this._post.querySelector('.post__image').addEventListener('click', () => this._handle());
+    this._post.querySelector('.post__image').addEventListener('click', this._handleImageClick);
   }
 
   _like () {

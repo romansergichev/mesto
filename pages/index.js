@@ -92,7 +92,16 @@ const popupAdd = new PopupWithForm({
 
 
 const getPost = (input, templateSelector) => {
-  const post = new Post(input, templateSelector);
+  const post = new Post({
+    data: input,
+    handleImageClick: (evt) => {
+      if (evt.target.classList.contains('post__image')) {
+        const popupWithImage = new PopupWithImage(evt.target, '.popup_type_photo');
+        popupWithImage.open();
+        popupWithImage.setEventListeners();
+      }
+    }
+   },templateSelector);
   const postElement = post.generateNewPost();
   
   return postElement;
@@ -100,16 +109,16 @@ const getPost = (input, templateSelector) => {
 
 
 
-function submitAddPostForm () {
-  const inputData = {
-    name: formPlace.value,
-    link: formLink.value
-  }
+// function submitAddPostForm () {
+//   const inputData = {
+//     name: formPlace.value,
+//     link: formLink.value
+//   }
 
-  postsList.prepend(getPost(inputData, '#post-template'));
-  closePopup(popupAddPost);
-  formAddPost.reset();
-}
+//   postsList.prepend(getPost(inputData, '#post-template'));
+//   closePopup(popupAddPost);
+//   formAddPost.reset();
+// }
 
 // initialPosts.forEach(place => {
 //   postsList.append(getPost(place, '#post-template'));
@@ -143,10 +152,4 @@ addFormValidator.enableValidation();
 
 initialPostsList.renderPosts();
 // костыль чтобы заработал попап с картинкой
-document.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('post__image')) {
-    const popupWithImage = new PopupWithImage(evt.target, '.popup_type_photo');
-    popupWithImage.open();
-    popupWithImage.setEventListeners();
-  }
-})
+// document.addEventListener('click', )
