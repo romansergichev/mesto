@@ -4,6 +4,7 @@ import { initialPosts, validationConfig } from '../utils/data.js';
 import Section from '../components/Section.js';
 import  Popup  from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 
 const userName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
@@ -34,7 +35,24 @@ const initialPostsList = new Section({
   }
 }, '.posts__list');
 
-const popup = new Popup('.popup');
+const popupEdit = new PopupWithForm({ 
+    submiter: () => {
+      userName.textContent = formName.value; 
+      profileDescription.textContent = formDescription.value;
+      popupEdit.close();
+    },
+  },'.popup_type_edit');
+const popupAdd = new PopupWithForm({
+  submiter: () => {
+    const inputData = {
+      name: formPlace.value,
+      link: formLink.value
+    }
+  
+    postsList.prepend(getPost(inputData, '#post-template'));
+    popupAdd.close();
+  },
+}, '.popup_type_add-post');
 
 
 
@@ -65,12 +83,7 @@ const popup = new Popup('.popup');
 //   }
 // }
 
-function submitEditForm () {
-  userName.textContent = formName.value; 
-  profileDescription.textContent = formDescription.value;
 
-  closePopup(popupEditProfile);
-}
 
 const getPost = (input, templateSelector) => {
   const post = new Post(input, templateSelector);
@@ -78,6 +91,8 @@ const getPost = (input, templateSelector) => {
   
   return postElement;
 }
+
+
 
 function submitAddPostForm () {
   const inputData = {
@@ -99,26 +114,29 @@ editButton.addEventListener('click', () => {
   formDescription.value = profileDescription.textContent;
 
   editFormValidator.resetValidation();
-  popup.open();
-  popup.setEventListeners();
+  popupEdit.open();
+  popupEdit.setEventListeners();
+  // formEdit.addEventListener('submit', submitEditForm);
 });
 
 addButton.addEventListener('click', () => {
   addFormValidator.resetValidation();
+  popupAdd.open();
+  popupAdd.setEventListeners();
   // openPopup(popupAddPost);
 });
 
 // popupCloseEditButton.addEventListener('click', () => popup.close());
 // popupCloseAddPostButton.addEventListener('click', () => closePopup(popupAddPost));
 // popupClosePhotoButton.addEventListener('click', () => closePopup(popupPhoto));
-formEdit.addEventListener('submit', submitEditForm);
-formAddPost.addEventListener('submit',submitAddPostForm);
+// formEdit.addEventListener('submit', submitEditForm);
+// formAddPost.addEventListener('submit',submitAddPostForm);
 
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
 
 initialPostsList.renderPosts();
-
+// костыль чтобы заработал попап с картинкой
 document.addEventListener('click', (evt) => {
   if (evt.target.classList.contains('post__image')) {
     const popupWithImage = new PopupWithImage(evt.target, '.popup_type_photo');
