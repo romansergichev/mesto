@@ -1,102 +1,59 @@
 import { Post } from '../components/Post.js';
 import { FormValidator } from '../components/FormValidator.js';
-import { initialPosts, validationConfig } from '../utils/data.js';
 import Section from '../components/Section.js';
-import  Popup  from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import { 
+  initialPosts,
+  validationConfig,
+  selectors,
+  editButton,
+  addButton,
+  formEdit,
+  formName,
+  formDescription,
+  formAddPost,
+  postsList
+} from '../utils/data.js';
 
-
-const userName = document.querySelector('.profile__name');
-const profileDescription = document.querySelector('.profile__description');
-const editButton = document.querySelector('.profile__edit');
-const addButton = document.querySelector('.profile__add-button');
-const popupEditProfile = document.querySelector('.popup_type_edit');
-const popupAddPost = document.querySelector('.popup_type_add-post');
-const popupCloseEditButton = document.querySelector('.popup__close-button_type_edit');
-const popupCloseAddPostButton = document.querySelector('.popup__close-button_type_add-post');
-const popupClosePhotoButton = document.querySelector('.popup__close-button_type_photo');
-const formEdit = document.querySelector('.popup__form_type_edit');
-const formName = document.querySelector('.popup__input_type_name');
-const formDescription = document.querySelector('.popup__input_type_description');
-const formAddPost = document.querySelector('.popup__form_type_add-post');
-const formPlace = document.querySelector('.popup__input_type_place');
-const formLink = document.querySelector('.popup__input_type_link');
-const popupPhoto = document.querySelector('.popup_type_photo');
-const postsList = document.querySelector('.posts__list');
 const editFormValidator = new FormValidator(validationConfig, formEdit);
 const addFormValidator = new FormValidator(validationConfig, formAddPost);
-
-const userInfo = new UserInfo('.profile__name', '.profile__description')
-const userData = userInfo.getUserInfo();
-console.log(userInfo.getUserInfo());
+const userInfo = new UserInfo(selectors.profileName, selectors.profileDescription);
 
 const initialPostsList = new Section({
   items: initialPosts,
   renderer: (item) => {
-    const post = getPost(item, '#post-template')
+    const post = getPost(item, selectors.postTemplate)
     initialPostsList.appendItem(post);
   }
-}, '.posts__list');
+}, selectors.postsList);
 
 const popupEdit = new PopupWithForm({ 
-    submiter: () => {
-      userInfo.setUserInfo(formName.value, formDescription.value)
-      // userData.name = formName.value; 
-      // userData.description = formDescription.value;
+    submiter: (inputValues) => {
+      userInfo.setUserInfo(inputValues['profile-name'], inputValues['profile-description'])
       popupEdit.close();
     },
-  },'.popup_type_edit');
+  }, selectors.popupEdit);
 const popupAdd = new PopupWithForm({
-  submiter: () => {
+  submiter: (inputValues) => {
     const inputData = {
-      name: formPlace.value,
-      link: formLink.value
+      name: inputValues['new-place'],
+      link: inputValues['place-link']
     }
   
-    postsList.prepend(getPost(inputData, '#post-template'));
+    postsList.prepend(getPost(inputData, selectors.postTemplate));
     popupAdd.close();
   },
-}, '.popup_type_add-post');
-
-
-
-// function openPopup (popupElement) {
-//   popupElement.classList.add('popup_opened');
-
-//   popupElement.addEventListener('mousedown', closeOnMousedown);
-//   document.addEventListener('keydown',  closeOnEscape);
-// }
-
-// function closePopup (popupElement) {
-//   popupElement.classList.remove('popup_opened');
-
-//   popupElement.removeEventListener('mousedown', closeOnMousedown);
-//   document.removeEventListener('keydown',closeOnEscape);
-// }
-
-// const closeOnEscape = evt => {
-//   if(evt.key === 'Escape') {
-//     const openedPopup = document.querySelector('.popup_opened');
-//     closePopup(openedPopup);
-//   }
-// }
-
-// const closeOnMousedown = evt => {
-//   if(evt.target.classList.contains('popup')) {
-//     closePopup(evt.target);
-//   }
-// }
-
-
+}, selectors.popupAddPost);
 
 const getPost = (input, templateSelector) => {
   const post = new Post({
     data: input,
     handleImageClick: (evt) => {
-      if (evt.target.classList.contains('post__image')) {
-        const popupWithImage = new PopupWithImage(evt.target, '.popup_type_photo');
+      
+      if (evt.target.classList.contains(selectors.imageClass)) {
+        const popupWithImage = new PopupWithImage(evt.target, selectors.popupWithImage);
         popupWithImage.open();
         popupWithImage.setEventListeners();
       }
@@ -107,49 +64,23 @@ const getPost = (input, templateSelector) => {
   return postElement;
 }
 
-
-
-// function submitAddPostForm () {
-//   const inputData = {
-//     name: formPlace.value,
-//     link: formLink.value
-//   }
-
-//   postsList.prepend(getPost(inputData, '#post-template'));
-//   closePopup(popupAddPost);
-//   formAddPost.reset();
-// }
-
-// initialPosts.forEach(place => {
-//   postsList.append(getPost(place, '#post-template'));
-// });
-
 editButton.addEventListener('click', () => {
+  const userData = userInfo.getUserInfo();
+
   formName.value = userData.name;
   formDescription.value = userData.description;
 
   editFormValidator.resetValidation();
   popupEdit.open();
   popupEdit.setEventListeners();
-  // formEdit.addEventListener('submit', submitEditForm);
 });
 
 addButton.addEventListener('click', () => {
   addFormValidator.resetValidation();
   popupAdd.open();
   popupAdd.setEventListeners();
-  // openPopup(popupAddPost);
 });
-
-// popupCloseEditButton.addEventListener('click', () => popup.close());
-// popupCloseAddPostButton.addEventListener('click', () => closePopup(popupAddPost));
-// popupClosePhotoButton.addEventListener('click', () => closePopup(popupPhoto));
-// formEdit.addEventListener('submit', submitEditForm);
-// formAddPost.addEventListener('submit',submitAddPostForm);
 
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
-
 initialPostsList.renderPosts();
-// костыль чтобы заработал попап с картинкой
-// document.addEventListener('click', )

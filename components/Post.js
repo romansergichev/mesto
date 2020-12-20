@@ -1,7 +1,4 @@
-// import { popupPhoto } from '../pages/index.js';
-
-const modalImage = document.querySelector('.popup__post-image');
-const modalTitle = document.querySelector('.popup__post-title');
+import { selectors } from '../utils/data.js';
 
 class Post {
   constructor({data, handleImageClick}, template) {
@@ -13,8 +10,8 @@ class Post {
 
   _getTemplate () {
     const postTemplate = document
-    .querySelector('#post-template')
-    .content.querySelector('.post')
+    .querySelector(this._templateSelector)
+    .content.querySelector(selectors.post)
     .cloneNode(true);
 
     return postTemplate;
@@ -22,34 +19,27 @@ class Post {
 
   generateNewPost () {
     this._post = this._getTemplate();
-    const postImage = this._post.querySelector('.post__image');
+    const postImage = this._post.querySelector(selectors.postImage);
 
     this._serListeners();
 
     postImage.src = this._link;
     postImage.alt = this._name;
 
-    this._post.querySelector('.post__title').textContent = this._name;
+    this._post.querySelector(selectors.postTitle).textContent = this._name;
 
     return this._post;
   }
 
   _serListeners () {
-    this._post.querySelector('.post__like-button').addEventListener('click', () => this._like());
-    this._post.querySelector('.post__delete').addEventListener('click', () => this._delete());
-    this._post.querySelector('.post__image').addEventListener('click', this._handleImageClick);
+    this._post.querySelector(selectors.postLikeButton).addEventListener('click', () => this._like());
+    this._post.querySelector(selectors.postDeleteButton).addEventListener('click', () => this._delete());
+    this._post.querySelector(selectors.postImage).addEventListener('click', this._handleImageClick);
   }
 
   _like () {
-    this._post.querySelector('.post__like-button').classList.toggle('post__like-button_active');
+    this._post.querySelector(selectors.postLikeButton).classList.toggle(selectors.postLikeButtonIsActive);
   }
-
-  // _openPhotoPopup () {
-  //   modalImage.src = this._link;
-  //   modalImage.alt = this._name;
-  //   modalTitle.textContent = this._name;
-  //   openPopup(popupPhoto);
-  // }
 
   _delete () {
     this._post.remove();
