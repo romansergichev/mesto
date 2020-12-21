@@ -30,22 +30,20 @@ const initialPostsList = new Section({
 }, selectors.postsList);
 
 const popupEdit = new PopupWithForm({ 
-    submiter: (inputValues) => {
-      userInfo.setUserInfo(inputValues['profile-name'], inputValues['profile-description'])
-      popupEdit.close();
-    },
-  }, selectors.popupEdit);
+  submiter: (inputValues) => {
+    userInfo.setUserInfo(inputValues)
+    popupEdit.close();
+  },
+  selector: selectors.popupEdit
+});
+
 const popupAdd = new PopupWithForm({
   submiter: (inputValues) => {
-    const inputData = {
-      name: inputValues['new-place'],
-      link: inputValues['place-link']
-    }
-  
-    postsList.prepend(getPost(inputData, selectors.postTemplate));
+    postsList.prepend(getPost(inputValues, selectors.postTemplate));
     popupAdd.close();
   },
-}, selectors.popupAddPost);
+  selector: selectors.popupAddPost
+});
 
 const getPost = (input, templateSelector) => {
   const post = new Post({
@@ -60,7 +58,6 @@ const getPost = (input, templateSelector) => {
     }
    },templateSelector);
   const postElement = post.generateNewPost();
-  
   return postElement;
 }
 
@@ -72,15 +69,17 @@ editButton.addEventListener('click', () => {
 
   editFormValidator.resetValidation();
   popupEdit.open();
-  popupEdit.setEventListeners();
+
 });
 
 addButton.addEventListener('click', () => {
   addFormValidator.resetValidation();
   popupAdd.open();
-  popupAdd.setEventListeners();
+
 });
 
+initialPostsList.renderPosts();
+popupEdit.setEventListeners();
+popupAdd.setEventListeners();
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
-initialPostsList.renderPosts();

@@ -32,8 +32,8 @@ class Post {
   }
 
   _serListeners () {
-    this._post.querySelector(selectors.postLikeButton).addEventListener('click', () => this._like());
-    this._post.querySelector(selectors.postDeleteButton).addEventListener('click', () => this._delete());
+    this._post.querySelector(selectors.postLikeButton).addEventListener('click', this._like.bind(this));
+    this._post.querySelector(selectors.postDeleteButton).addEventListener('click', this._delete.bind(this));
     this._post.querySelector(selectors.postImage).addEventListener('click', this._handleImageClick);
   }
 

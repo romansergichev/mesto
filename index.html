@@ -34,12 +34,12 @@
     </main>    
     <div class="popup popup_type_edit">
       <div class="popup__container">
-        <button type="button" class="popup__close-button popup__close-button_type_edit opacity"></button>
+        <button type="button" class="popup__close-button opacity"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <form name="edit-form" class="popup__form popup__form_type_edit" novalidate>
           <label class="popup__form-field">
             <input 
-              name="profile-name" 
+              name="username" 
               type="text" 
               id="profile-name-input" 
               class="popup__input popup__input_type_name" 
@@ -50,7 +50,7 @@
           </label>
           <label class="popup__form-field">
             <input 
-              name="profile-description" 
+              name="description" 
               type="text" id="profile-description-input" 
               class="popup__input popup__input_type_description" 
               minlength="2" maxlength="200" 
@@ -64,12 +64,12 @@
     </div>
     <div class="popup popup_type_add-post">
       <div class="popup__container popup__container_size_s">
-        <button type="button" class="popup__close-button popup__close-button_type_add-post popup__close-button_position_corner opacity"></button>
+        <button type="button" class="popup__close-button popup__close-button_position_corner opacity"></button>
         <h2 class="popup__title popup__title_margin">Новое место</h2>
         <form name="add-post-form" class="popup__form popup__form_type_add-post" novalidate>
           <label class="popup__form-field">
             <input 
-              name="new-place" 
+              name="name" 
               type="text" 
               id="new-place-input"
               placeholder="Название" 
@@ -81,7 +81,7 @@
           </label>
           <label class="popup__form-field">
             <input 
-              name="place-link" 
+              name="link" 
               type="url" 
               id="place-link-input"
               placeholder="Ссылка на картинку" 
@@ -89,14 +89,14 @@
               required
             >
             <span class="popup__input-error" id="place-link-input-error"></span>
-          </label>         
+          </label>
           <button type="submit" class="popup__submit-button">Создать</button>
         </form>
       </div>
     </div>
     <div class="popup popup_type_photo background-opacity">
       <div class="popup__photo-container popup__photo-container">
-        <button type="button" class="popup__close-button popup__close-button_type_photo popup__close-button_position_corner opacity"></button>
+        <button type="button" class="popup__close-button popup__close-button_position_corner opacity"></button>
         <img src="#" alt="#" class="popup__post-image">
         <h4 class="popup__post-title"></h4>
       </div>
