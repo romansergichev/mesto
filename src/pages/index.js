@@ -1,3 +1,4 @@
+import '../pages/index.css'
 import { Post } from '../components/Post.js';
 import { FormValidator } from '../components/FormValidator.js';
 import Section from '../components/Section.js';

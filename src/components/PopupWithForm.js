@@ -22,8 +22,8 @@ export default class PopupWithForm extends Popup {
 
   setEventListeners() {
     this._closeButton.addEventListener('click', this.close.bind(this));
-    document.addEventListener('keydown', this._handleEscClose);
-    this._popup.addEventListener('mousedown', this._handleMousedownClose);
+    document.addEventListener('keydown', this._escClose);
+    this._popup.addEventListener('mousedown', this._mousedownClose);
     this._popupForm.addEventListener('submit', this._handleSubmit); 
   }
 

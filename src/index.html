@@ -4,18 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
-  <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body class="body">
   <div class="root">
     <header class="header">
       <a href="./index.html" target="_self" class="header__logo-link">
-        <img src="./images/icons/mesto-logo.svg" alt="Логотип Место" class="header__logo opacity">
+        <img src="<%=require('./images/icons/mesto-logo.svg')%>" alt="Логотип Место" class="header__logo opacity">
       </a>
     </header>
     <main class="main">
       <section class="profile">
-        <img src="./images/profile-pic.jpg" alt="Аватар профиля" class="profile__avatar">
+        <img src="<%=require('./images/profile-pic.jpg')%>" alt="Аватар профиля" class="profile__avatar">
         <div class="profile__info">
           <div class="profile__user-info">
             <div class="profile__name-wrapper">
@@ -115,6 +114,5 @@
       </div>
     </li>
   </template>
-  <script type="module" src="./pages/index.js"></script>
 </body>
 </html>
