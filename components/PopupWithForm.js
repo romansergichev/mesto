@@ -31,6 +31,6 @@ export default class PopupWithForm extends Popup {
   close() {
     this._popup.classList.remove(selectors.popupIsOpenedClass);
     this._popup.querySelector(selectors.popupForm).reset();
-    this.removeEventListeners();
+    document.removeEventListener('keydown', this._handleEscClose);
   }
 }
