@@ -58,7 +58,7 @@ const getPost = (input, templateSelector) => {
    },templateSelector);
 
   const postElement = post.generateNewPost();
-  
+
   return postElement;
 }
 
@@ -75,7 +75,7 @@ editButton.addEventListener('click', () => {
 });
 
 addButton.addEventListener('click', () => {
-  popupEdit.setEventListeners();
+  popupAdd.setEventListeners();
   addFormValidator.resetValidation();
   popupAdd.open();
 });
