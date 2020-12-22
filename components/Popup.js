@@ -3,17 +3,16 @@ import { selectors } from '../utils/data.js';
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
+    this._closeButton = this._popup.querySelector(selectors.closeButton);
   }
 
   open() {
     this._popup.classList.add(selectors.popupIsOpenedClass);
-    document.addEventListener('keydown', this._handleEscClose);
-
   }
 
   close() {
     this._popup.classList.remove(selectors.popupIsOpenedClass);
-    document.removeEventListener('keydown', this._handleEscClose);
+    this._removeEventListeners();
   }
 
   _handleEscClose = evt =>  {
@@ -29,10 +28,13 @@ export default class Popup {
   }
   
   setEventListeners() {
-    const closeButton = this._popup.querySelector(selectors.closeButton);
-
-    closeButton.addEventListener('click', this.close.bind(this));
+    this._closeButton.addEventListener('click', this.close.bind(this));
     document.addEventListener('keydown', this._handleEscClose);
     this._popup.addEventListener('mousedown', this._handleMousedownClose);
+  }
+
+  _removeEventListeners() {
+    document.removeEventListener('keydown', this._handleEscClose);
+    this._popup.removeEventListener('mousedown', this._handleMousedownClose);
   }
 }

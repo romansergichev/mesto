@@ -49,15 +49,16 @@ const getPost = (input, templateSelector) => {
   const post = new Post({
     data: input,
     handleImageClick: (evt) => {
-      
       if (evt.target.classList.contains(selectors.imageClass)) {
         const popupWithImage = new PopupWithImage(evt.target, selectors.popupWithImage);
-        popupWithImage.open();
         popupWithImage.setEventListeners();
+        popupWithImage.open();
       }
     }
    },templateSelector);
+
   const postElement = post.generateNewPost();
+  
   return postElement;
 }
 
@@ -67,19 +68,18 @@ editButton.addEventListener('click', () => {
   formName.value = userData.name;
   formDescription.value = userData.description;
 
+  popupEdit.setEventListeners();
   editFormValidator.resetValidation();
   popupEdit.open();
 
 });
 
 addButton.addEventListener('click', () => {
+  popupEdit.setEventListeners();
   addFormValidator.resetValidation();
   popupAdd.open();
-
 });
 
 initialPostsList.renderPosts();
-popupEdit.setEventListeners();
-popupAdd.setEventListeners();
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
