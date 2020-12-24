@@ -3,13 +3,15 @@ import { selectors } from '../utils/data.js';
 
 export default class PopupWithImage extends Popup {
   constructor(popupSelector) {
-    super(popupSelector);   
+    super(popupSelector); 
+    this._image = this._popup.querySelector(selectors.popupImage);
+    this._title = this._popup.querySelector(selectors.popupTitle);
   }
   open(input) {
     super.open();
     
-    this._popup.querySelector(selectors.popupImage).src = input.link;
-    this._popup.querySelector(selectors.popupImage).alt = input.name;
-    this._popup.querySelector(selectors.popupTitle).textContent = input.name;
+    this._image.src = input.link;
+    this._image.alt = input.name;
+    this._title.textContent = input.name;
   }
 }
