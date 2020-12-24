@@ -65,4 +65,3 @@ export const formEdit = document.querySelector('.popup__form_type_edit');
 export const formName = document.querySelector('.popup__input_type_name');
 export const formDescription = document.querySelector('.popup__input_type_description');
 export const formAddPost = document.querySelector('.popup__form_type_add-post');
-export const postsList = document.querySelector('.posts__list');

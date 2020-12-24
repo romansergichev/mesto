@@ -14,8 +14,7 @@ import {
   formEdit,
   formName,
   formDescription,
-  formAddPost,
-  postsList
+  formAddPost
 } from '../utils/data.js';
 
 const editFormValidator = new FormValidator(validationConfig, formEdit);
@@ -25,7 +24,7 @@ const userInfo = new UserInfo(selectors.profileName, selectors.profileDescriptio
 const initialPostsList = new Section({
   items: initialPosts,
   renderer: (item) => {
-    const post = getPost(item, selectors.postTemplate)
+    const post = getPost(item, selectors.postTemplate);
     initialPostsList.appendItem(post);
   }
 }, selectors.postsList);
@@ -40,20 +39,22 @@ const popupEdit = new PopupWithForm({
 
 const popupAdd = new PopupWithForm({
   submiter: (inputValues) => {
-    postsList.prepend(getPost(inputValues, selectors.postTemplate));
+    const post = getPost(inputValues, selectors.postTemplate);
+    initialPostsList.prependItem(post);
     popupAdd.close();
   },
   selector: selectors.popupAddPost
 });
+
+const popupWithImage = new PopupWithImage(selectors.popupWithImage);
 
 const getPost = (input, templateSelector) => {
   const post = new Post({
     data: input,
     handleImageClick: (evt) => {
       if (evt.target.classList.contains(selectors.imageClass)) {
-        const popupWithImage = new PopupWithImage(evt.target, selectors.popupWithImage);
         popupWithImage.setEventListeners();
-        popupWithImage.open();
+        popupWithImage.open(input);
       }
     }
    },templateSelector);
@@ -69,18 +70,18 @@ editButton.addEventListener('click', () => {
   formName.value = userData.name;
   formDescription.value = userData.description;
 
-  popupEdit.setEventListeners();
   editFormValidator.resetValidation();
   popupEdit.open();
 
 });
 
 addButton.addEventListener('click', () => {
-  popupAdd.setEventListeners();
   addFormValidator.resetValidation();
   popupAdd.open();
 });
 
+popupEdit.setEventListeners();
+popupAdd.setEventListeners();
 initialPostsList.renderPosts();
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
