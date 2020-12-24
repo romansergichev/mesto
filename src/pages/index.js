@@ -53,7 +53,6 @@ const getPost = (input, templateSelector) => {
     data: input,
     handleImageClick: (evt) => {
       if (evt.target.classList.contains(selectors.imageClass)) {
-        popupWithImage.setEventListeners();
         popupWithImage.open(input);
       }
     }
@@ -80,6 +79,7 @@ addButton.addEventListener('click', () => {
   popupAdd.open();
 });
 
+popupWithImage.setEventListeners();
 popupEdit.setEventListeners();
 popupAdd.setEventListeners();
 initialPostsList.renderPosts();
