@@ -20,10 +20,7 @@ class Post {
   generateNewPost () {
     this._post = this._getTemplate();
     const postImage = this._post.querySelector(selectors.postImage);
-    // this._post.insertAdjacentHTML('afterbegin', '<button class="post__delete opacity"></button>');
-
-    console.log(this._post);
-    this._serListeners();
+    this._setListeners();
 
     postImage.src = this._link;
     postImage.alt = this._name;
@@ -33,19 +30,14 @@ class Post {
     return this._post;
   }
 
-  _serListeners () {
+  _setListeners () {
     this._post.querySelector(selectors.postLikeButton).addEventListener('click', this._like.bind(this));
-    this._post.querySelector(selectors.postDeleteButton).addEventListener('click', this._delete.bind(this));
+
     this._post.querySelector(selectors.postImage).addEventListener('click', this._handleImageClick);
   }
 
   _like () {
     this._post.querySelector(selectors.postLikeButton).classList.toggle(selectors.postLikeButtonIsActive);
-  }
-
-  _delete () {
-    this._post.remove();
-    this._post = null;
   }
 }
 

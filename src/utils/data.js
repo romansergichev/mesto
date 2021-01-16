@@ -49,6 +49,7 @@ export const selectors = {
     profileName: '.profile__name',
     profileDescription: '.profile__description',
     postTemplate: '#post-template',
+    userPostTemplate: '#user-post-template',
     postsList: '.posts__list',
     popupClass: 'popup',
     popupIsOpenedClass: 'popup_opened',

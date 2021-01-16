@@ -7,7 +7,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import { 
-  // initialPosts,
+  initialPosts,
   validationConfig,
   selectors,
   editButton,
@@ -55,13 +55,13 @@ api.editUserProfile('Roman Sergichev', 'Praktikum student')
 //   .then(result => console.log(result))
 
   
-// const initialPostsList = new Section({
-//   items: initialPosts,
-//   renderer: (item) => {
-//     const post = getPost(item, selectors.postTemplate);
-//     initialPostsList.appendItem(post);
-//   }
-// }, selectors.postsList);
+const initialPostsList = new Section({
+  items: initialPosts,
+  renderer: (item) => {
+    const post = getPost(item, selectors.postTemplate);
+    initialPostsList.appendItem(post);
+  }
+}, selectors.postsList);
 const popupAvatar = new PopupWithForm({
   submiter: (inputValues) => {
     console.log(inputValues)
@@ -81,7 +81,7 @@ const popupEdit = new PopupWithForm({
 
 const popupAdd = new PopupWithForm({
   submiter: (inputValues) => {
-    const post = getPost(inputValues, selectors.postTemplate);
+    const post = getPost(inputValues, selectors.userPostTemplate);
     initialPostsList.prependItem(post);
     popupAdd.close();
   },
