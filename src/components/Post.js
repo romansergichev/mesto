@@ -20,7 +20,9 @@ class Post {
   generateNewPost () {
     this._post = this._getTemplate();
     const postImage = this._post.querySelector(selectors.postImage);
+    // this._post.insertAdjacentHTML('afterbegin', '<button class="post__delete opacity"></button>');
 
+    console.log(this._post);
     this._serListeners();
 
     postImage.src = this._link;

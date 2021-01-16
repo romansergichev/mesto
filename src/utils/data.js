@@ -45,6 +45,7 @@ export const validationConfig = {
 }
 
 export const selectors = {
+    profileAvatar: '.profile__avatar',
     profileName: '.profile__name',
     profileDescription: '.profile__description',
     postTemplate: '#post-template',
@@ -55,6 +56,7 @@ export const selectors = {
     popupEdit: '.popup_type_edit',
     popupAddPost: '.popup_type_add-post',
     popupWithImage: '.popup_type_photo',
+    popupAvatar: '.popup_type_edit-avatar',
     popupForm: '.popup__form',
     popupInput: '.popup__input',
     popupImage: '.popup__post-image',
@@ -70,8 +72,10 @@ export const selectors = {
 }
 
 export const editButton = document.querySelector('.profile__edit');
+export const editAvatar = document.querySelector('.profile__edit-avatar');
 export const addButton = document.querySelector('.profile__add-button');
 export const formEdit = document.querySelector('.popup__form_type_edit');
+export const formAvatar = document.querySelector('.popup__form_type_edit-avatar');
 export const formName = document.querySelector('.popup__input_type_name');
 export const formDescription = document.querySelector('.popup__input_type_description');
 export const formAddPost = document.querySelector('.popup__form_type_add-post');

@@ -11,8 +11,10 @@ import {
   validationConfig,
   selectors,
   editButton,
+  editAvatar,
   addButton,
   formEdit,
+  formAvatar,
   formName,
   formDescription,
   formAddPost,
@@ -22,7 +24,12 @@ import {
 const api = new Api(options);
 const editFormValidator = new FormValidator(validationConfig, formEdit);
 const addFormValidator = new FormValidator(validationConfig, formAddPost);
-const userInfo = new UserInfo(selectors.profileName, selectors.profileDescription);
+const avatarFormValidator = new FormValidator(validationConfig, formAvatar);
+const userInfo = new UserInfo({
+  name: selectors.profileName, 
+  description: selectors.profileDescription,
+  avatar: selectors.profileAvatar
+});
 
 
 api.getInitialCards()
@@ -55,6 +62,14 @@ api.editUserProfile('Roman Sergichev', 'Praktikum student')
 //     initialPostsList.appendItem(post);
 //   }
 // }, selectors.postsList);
+const popupAvatar = new PopupWithForm({
+  submiter: (inputValues) => {
+    console.log(inputValues)
+    userInfo.setAvatar(inputValues);
+    popupAvatar.close();
+  },
+  selector: selectors.popupAvatar
+});
 
 const popupEdit = new PopupWithForm({ 
   submiter: (inputValues) => {
@@ -90,6 +105,11 @@ const getPost = (input, templateSelector) => {
   return postElement;
 }
 
+editAvatar.addEventListener('click', () => {
+  avatarFormValidator.resetValidation();
+  popupAvatar.open()
+})
+
 editButton.addEventListener('click', () => {
   const userData = userInfo.getUserInfo();
 
@@ -106,9 +126,11 @@ addButton.addEventListener('click', () => {
   popupAdd.open();
 });
 
+popupAvatar.setEventListeners();
 popupWithImage.setEventListeners();
 popupEdit.setEventListeners();
 popupAdd.setEventListeners();
 // initialPostsList.renderPosts();
+avatarFormValidator.enableValidation();
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
