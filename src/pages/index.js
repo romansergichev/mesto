@@ -1,13 +1,13 @@
 import '../pages/index.css'
 import { Post } from '../components/Post.js';
 import { FormValidator } from '../components/FormValidator.js';
+import UserPost from '../components/UserPost.js'
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import { 
-  initialPosts,
   validationConfig,
   selectors,
   editButton,
@@ -35,37 +35,42 @@ const userInfo = new UserInfo({
 api.getInitialCards()
   .then(result => {
     console.log(result)
-    const getPosts = new Section({
-      items: result,
-      renderer: (item) => {
-        const post = getPost(item, selectors.postTemplate);
-        getPosts.appendItem(post);
-      }
-    }, selectors.postsList);
-    getPosts.renderPosts()
+    posts.renderPosts(result)
   })
 
 api.getUserInfo()
-  .then(result => console.log(result))
+  .then(result => {
+    console.log(result)
+    document.querySelector(selectors.profileAvatar).src = result.avatar
+    document.querySelector(selectors.profileName).textContent = result.name
+    document.querySelector(selectors.profileDescription).textContent = result.about
+    console.log(result._id)
+  })
 
-api.editUserProfile('Roman Sergichev', 'Praktikum student')
-  .then(result => console.log(result))
+// api.editUserProfile('Makoto Tsukimoto', 'Ping-pong player')
+//   .then(result => console.log(result))
 
 // api.addNewPost('Нотр-Дам', 'https://pbs.twimg.com/media/C-RJmqPXkAA8d7z.jpg')
 //   .then(result => console.log(result))
 
-  
-const initialPostsList = new Section({
-  items: initialPosts,
+// api.setAvatar('https://i.imgur.com/hNhF25g.jpg')
+//   .then(result => console.log(result));
+
+const posts = new Section({
   renderer: (item) => {
+    console.log(item)
     const post = getPost(item, selectors.postTemplate);
-    initialPostsList.appendItem(post);
+    posts.appendItem(post);
   }
 }, selectors.postsList);
+
 const popupAvatar = new PopupWithForm({
   submiter: (inputValues) => {
     console.log(inputValues)
-    userInfo.setAvatar(inputValues);
+    api.setAvatar(inputValues)
+      .then(result => {
+        userInfo.setAvatar(result);
+      })
     popupAvatar.close();
   },
   selector: selectors.popupAvatar
@@ -73,7 +78,11 @@ const popupAvatar = new PopupWithForm({
 
 const popupEdit = new PopupWithForm({ 
   submiter: (inputValues) => {
-    userInfo.setUserInfo(inputValues)
+    api.editUserProfile(inputValues)
+      .then(result => userInfo.setUserInfo({
+        username: result.name,
+        description: result.about
+      }))
     popupEdit.close();
   },
   selector: selectors.popupEdit
@@ -81,8 +90,11 @@ const popupEdit = new PopupWithForm({
 
 const popupAdd = new PopupWithForm({
   submiter: (inputValues) => {
-    const post = getPost(inputValues, selectors.userPostTemplate);
-    initialPostsList.prependItem(post);
+    api.addNewPost(inputValues)
+      .then(result => {
+        const post = getUserPost(result, selectors.userPostTemplate);
+        posts.prependItem(post);
+      })
     popupAdd.close();
   },
   selector: selectors.popupAddPost
@@ -91,7 +103,24 @@ const popupAdd = new PopupWithForm({
 const popupWithImage = new PopupWithImage(selectors.popupWithImage);
 
 const getPost = (input, templateSelector) => {
-  const post = new Post({
+  console.log(input);
+  const post = 
+    new Post({
+    data: input,
+    handleImageClick: (evt) => {
+      if (evt.target.classList.contains(selectors.imageClass)) {
+        popupWithImage.open(input);
+      }
+    }
+   },templateSelector);
+
+  const postElement = post.generateNewPost();
+
+  return postElement;
+}
+
+const getUserPost = (input, templateSelector) => {
+  const post = new UserPost({
     data: input,
     handleImageClick: (evt) => {
       if (evt.target.classList.contains(selectors.imageClass)) {

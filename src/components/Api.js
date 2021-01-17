@@ -36,12 +36,12 @@ export default class Api {
     .then(res => this._checkResponse(res)) 
   }
 
-  editUserProfile(name, description) {
+  editUserProfile({username, description}) {
     return fetch(`${this._url}/users/me`, {
         headers: this._headers,
         method: 'PATCH',
         body: JSON.stringify({
-          name: name,
+          name: username,
           about: description
         })
       }
@@ -49,7 +49,20 @@ export default class Api {
     .then(res => this._checkResponse(res)) 
   }
 
-  addNewPost(name, link) {
+  setAvatar({link}) {
+    console.log(link)
+    return fetch(`${this._url}/users/me/avatar` ,{
+        headers: this._headers,
+        method: 'PATCH',
+        body: JSON.stringify({
+          avatar: link
+        })
+      }
+    )
+    .then(res => this._checkResponse(res))
+  }
+
+  addNewPost({name, link}) {
     return fetch(`${this._url}/cards`,{
         headers: this._headers,
         method: 'POST',

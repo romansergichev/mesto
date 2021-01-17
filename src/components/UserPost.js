@@ -1,4 +1,5 @@
 import {Post} from './Post.js'
+import {selectors} from '../utils/data.js'
 
 export default class UserPost extends Post {
   _setListeners() {

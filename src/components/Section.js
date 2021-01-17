@@ -13,8 +13,8 @@ export default class Section {
     this._container.prepend(element);
   }
 
-  renderPosts() {
-    this._items.forEach(item => {
+  renderPosts(items) {
+    items.forEach(item => {
       this._renderer(item);
     });
   }   
