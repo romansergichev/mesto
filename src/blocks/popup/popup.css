@@ -4,6 +4,7 @@
 @import url(./__close-button/_position/popup__close-button_position_corner.css);
 @import url(./__title/popup__title.css);
 @import url(./__title/_margin/popup__title_margin.css);
+@import url(./__title/_margin/popup__title_confirm-margin.css);
 @import url(./__form/popup__form.css);
 @import url(./__input/popup__input.css);
 @import url(./__input/_type/popup__input_type_error.css);

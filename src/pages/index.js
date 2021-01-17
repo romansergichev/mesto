@@ -5,6 +5,7 @@ import UserPost from '../components/UserPost.js'
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupConfirm from '../components/PopupConfirm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import { 
@@ -30,7 +31,6 @@ const userInfo = new UserInfo({
   description: selectors.profileDescription,
   avatar: selectors.profileAvatar
 });
-
 
 api.getInitialCards()
   .then(result => {
@@ -58,7 +58,7 @@ api.getUserInfo()
 
 const posts = new Section({
   renderer: (item) => {
-    const post = getPost(item, selectors.postTemplate);
+    const post = getUserPost(item, selectors.userPostTemplate);
     posts.appendItem(post);
   }
 }, selectors.postsList);
@@ -99,6 +99,14 @@ const popupAdd = new PopupWithForm({
   selector: selectors.popupAddPost
 });
 
+const popupConfirm = new PopupConfirm({
+  submiter: (evt) => {
+    evt.preventDefault()
+    console.log('hi')
+  },
+  selector: selectors.popupConfirm
+});
+
 const popupWithImage = new PopupWithImage(selectors.popupWithImage);
 
 const getPost = (input, templateSelector) => {
@@ -118,13 +126,18 @@ const getPost = (input, templateSelector) => {
 }
 
 const getUserPost = (input, templateSelector) => {
+  console.log(input);
   const post = new UserPost({
     data: input,
     handleImageClick: (evt) => {
       if (evt.target.classList.contains(selectors.imageClass)) {
         popupWithImage.open(input);
       }
+    },
+    handleDeleteClick: () => {
+      popupConfirm.open()
     }
+
    },templateSelector);
 
   const postElement = post.generateNewPost();
@@ -157,6 +170,7 @@ popupAvatar.setEventListeners();
 popupWithImage.setEventListeners();
 popupEdit.setEventListeners();
 popupAdd.setEventListeners();
+popupConfirm.setEventListeners();
 // initialPostsList.renderPosts();
 avatarFormValidator.enableValidation();
 editFormValidator.enableValidation();

@@ -8,33 +8,6 @@ export const options = {
   }
 };
 
-// export const initialPosts = [
-//   {
-//       name: 'Архыз',
-//       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-//   },
-//   {
-//       name: 'Челябинская область',
-//       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-//   },
-//   {
-//       name: 'Иваново',
-//       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-//   },
-//   {
-//       name: 'Камчатка',
-//       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-//   },
-//   {
-//       name: 'Холмогорский район',
-//       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-//   },
-//   {
-//       name: 'Байкал',
-//       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-//   }
-// ];
-
 export const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -58,6 +31,7 @@ export const selectors = {
     popupAddPost: '.popup_type_add-post',
     popupWithImage: '.popup_type_photo',
     popupAvatar: '.popup_type_edit-avatar',
+    popupConfirm: '.popup_type_confirm',
     popupForm: '.popup__form',
     popupInput: '.popup__input',
     popupImage: '.popup__post-image',
@@ -69,8 +43,7 @@ export const selectors = {
     postLikeButton: '.post__like-button',
     postLikeCounter: '.post__like-counter',
     postLikeButtonIsActive: 'post__like-button_active',
-    postDeleteButton: '.post__delete',
-
+    postDeleteButton: '.post__delete'
 }
 
 export const editButton = document.querySelector('.profile__edit');
@@ -78,6 +51,7 @@ export const editAvatar = document.querySelector('.profile__edit-avatar');
 export const addButton = document.querySelector('.profile__add-button');
 export const formEdit = document.querySelector('.popup__form_type_edit');
 export const formAvatar = document.querySelector('.popup__form_type_edit-avatar');
+export const formConfirm = document.querySelector('.popup__form_type_confirm');
 export const formName = document.querySelector('.popup__input_type_name');
 export const formDescription = document.querySelector('.popup__input_type_description');
 export const formAddPost = document.querySelector('.popup__form_type_add-post');
