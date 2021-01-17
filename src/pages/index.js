@@ -58,7 +58,6 @@ api.getUserInfo()
 
 const posts = new Section({
   renderer: (item) => {
-    console.log(item)
     const post = getPost(item, selectors.postTemplate);
     posts.appendItem(post);
   }
@@ -103,7 +102,6 @@ const popupAdd = new PopupWithForm({
 const popupWithImage = new PopupWithImage(selectors.popupWithImage);
 
 const getPost = (input, templateSelector) => {
-  console.log(input);
   const post = 
     new Post({
     data: input,

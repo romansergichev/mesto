@@ -67,6 +67,7 @@ export const selectors = {
     postImage: '.post__image',
     postTitle: '.post__title',
     postLikeButton: '.post__like-button',
+    postLikeCounter: '.post__like-counter',
     postLikeButtonIsActive: 'post__like-button_active',
     postDeleteButton: '.post__delete',
 
