@@ -11,7 +11,7 @@ export default class UserPost extends Post {
     this._post.querySelector(selectors.postDeleteButton).addEventListener('click', this._handleDeleteClick);
   }
 
-  _delete () {
+  delete () {
     this._post.remove();
     this._post = null;
   }

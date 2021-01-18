@@ -1,5 +1,3 @@
-import Api from '../components/Api.js'
-
 export const options = {
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-19',
   headers: {
@@ -33,6 +31,7 @@ export const selectors = {
     popupAvatar: '.popup_type_edit-avatar',
     popupConfirm: '.popup_type_confirm',
     popupForm: '.popup__form',
+    popupConfirmForm: '.popup__form_type_confirm',
     popupInput: '.popup__input',
     popupImage: '.popup__post-image',
     popupTitle: '.popup__post-title',
