@@ -22,7 +22,7 @@ export default class Api {
         method: 'GET'
       }
     )
-      .then(res => this._checkResponse(res)) 
+      .then(this._checkResponse) 
   }
 
   getInitialCards() {
@@ -33,7 +33,7 @@ export default class Api {
         method: 'GET'
       }
     )
-    .then(res => this._checkResponse(res)) 
+    .then(this._checkResponse) 
   }
 
   editUserProfile({username, description}) {
@@ -46,7 +46,7 @@ export default class Api {
         })
       }
     )
-    .then(res => this._checkResponse(res)) 
+    .then(this._checkResponse) 
   }
 
   setAvatar({link}) {
@@ -58,7 +58,7 @@ export default class Api {
         })
       }
     )
-    .then(res => this._checkResponse(res))
+    .then(this._checkResponse)
   }
 
   addNewPost({name, link}) {
@@ -71,7 +71,7 @@ export default class Api {
         })
       }
     )
-    .then(res => this._checkResponse(res))
+    .then(this._checkResponse)
   }
 
   likePost(isLiked, cardId) {
@@ -82,7 +82,7 @@ export default class Api {
         },
         method: 'DELETE'
       })
-      .then(res => this._checkResponse(res))
+      .then(this._checkResponse)
     }
     else {
       return fetch(`${this._url}/cards/likes/${cardId}`, {
@@ -91,7 +91,7 @@ export default class Api {
         },
         method: 'PUT'
       })
-      .then(res => this._checkResponse(res))
+      .then(this._checkResponse)
     }
   }
 
@@ -103,20 +103,6 @@ export default class Api {
         method: 'DELETE'
       }
     )
-    .then(res => this._checkResponse(res))
-  }
-
-  uploadAvatar(link) {
-    return fetch(`${this._url}/users/me/avatar`, {
-        headers: {
-          authorization: `${this._authKey}`
-        },
-        method: 'PATCH',
-        body: JSON.stringify({
-          link: link
-        })
-      }
-    )
-    .then(res => this._checkResponse(res))
+    .then(this._checkResponse)
   }
 }

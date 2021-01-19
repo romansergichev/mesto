@@ -57,9 +57,9 @@ Promise.all(dataPromises)
             const post = getUserPost(result, selectors.userPostTemplate);
             posts.prependItem(post);
           })
+          .then(popupAdd.close())
           .catch(error => console.log(`Ошибка: ${error}`))
-          .finally(() => popupEdit.renderLoading(false))
-        popupAdd.close();
+          .finally(() => popupAdd.renderLoading(false))
       },
       selector: selectors.popupAddPost
     });
@@ -120,9 +120,9 @@ const popupAvatar = new PopupWithForm({
     popupAvatar.renderLoading(true)
     api.setAvatar(inputValues)
       .then(result => userInfo.setUserInfo(result))
+      .then(popupAvatar.close())
       .catch(error => console.log(`Ошибка: ${error}`))
-      .finally(() => popupEdit.renderLoading(false))
-    popupAvatar.close();
+      .finally(() => popupAvatar.renderLoading(false))
   },
   selector: selectors.popupAvatar
 });
@@ -132,9 +132,9 @@ const popupEdit = new PopupWithForm({
     popupEdit.renderLoading(true)
     api.editUserProfile(inputValues)
       .then(result => userInfo.setUserInfo(result))
+      .then(popupEdit.close())
       .catch(error => console.log(`Ошибка: ${error}`))
       .finally(() => popupEdit.renderLoading(false))
-    popupEdit.close();
   },
   selector: selectors.popupEdit
 });
