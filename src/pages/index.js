@@ -40,11 +40,13 @@ Promise.all(dataPromises)
 
     userInfo.setUserInfo(userData);
 
+
     const posts = new Section({
       renderer: (item) => {
         const post = item.owner._id == userData._id
         ? getUserPost(item, selectors.userPostTemplate)
         : getPost(item, selectors.postTemplate);
+        posts.renderLikes(post, item, userData)
         posts.appendItem(post);
       }
     }, selectors.postsList);
@@ -61,13 +63,47 @@ Promise.all(dataPromises)
       selector: selectors.popupAddPost
     });
 
+    const getPost = (input, templateSelector) => {
+      const post = new Post({
+        userdata: userData,
+        data: input,
+        handleImageClick: () => popupWithImage.open(input),
+        handleLikeClick: (isLiked) => api.likePost(isLiked, post.getPostId())
+          .then(data => post.like(data))
+        },templateSelector);
+      const postElement = post.generateNewPost();
+    
+      return postElement;
+    }
+
+    const deleteRequest = (post) => {
+      popupConfirm.open();
+      popupConfirm.handleDeleteRequest(() => {
+        api.deletePost(post.getPostId())
+          .then(post.delete())
+          .then(popupConfirm.close());
+      });
+    }
+
+    const getUserPost = (input, templateSelector) => {
+      const post = new UserPost({
+        data: input,
+        handleImageClick: () => popupWithImage.open(input),
+        handleLikeClick: (isLiked) => api.likePost(isLiked, post.getPostId())
+        .then(data => post.like(data)),
+        handleDeleteClick: (post) => deleteRequest(post),
+      },templateSelector);
+      const postElement = post.generateNewPost();
+    
+      return postElement;
+    }
+
     addButton.addEventListener('click', () => {
       addFormValidator.resetValidation();
       popupAdd.open();
     });
-
+    console.log(postsData)
     posts.renderPosts(postsData);
-
 
     popupAdd.setEventListeners();
   })
@@ -94,41 +130,6 @@ const popupEdit = new PopupWithForm({
   },
   selector: selectors.popupEdit
 });
-
-const handleImagePopup = (evt) => {
-  if (evt.target.classList.contains(selectors.imageClass)) {
-    popupWithImage.open(input);
-  }
-}
-
-const getPost = (input, templateSelector) => {
-  const post = new Post({
-    data: input,
-    handleImageClick: handleImagePopup
-    },templateSelector);
-
-  const postElement = post.generateNewPost();
-
-  return postElement;
-}
-
-const getUserPost = (input, templateSelector) => {
-  const post = new UserPost({
-    data: input,
-    handleImageClick: handleImagePopup,
-    handleDeleteClick: () => {
-      popupConfirm.open();
-      popupConfirm.handleDeleteRequest(() => {
-        api.deletePost(post.getPostId())
-          .then(post.delete())
-          .then(popupConfirm.close());
-      });
-    }
-  },templateSelector);
-  const postElement = post.generateNewPost();
-
-  return postElement;
-}
 
 editAvatar.addEventListener('click', () => {
   avatarFormValidator.resetValidation();

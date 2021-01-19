@@ -75,18 +75,25 @@ export default class Api {
     .then(res => this._checkResponse(res))
   }
 
-  likePost() {
-      return fetch(`${this._url}/users/me/avatar`, {
+  likePost(isLiked, cardId) {
+    if (isLiked) {
+      return fetch(`${this._url}/cards/likes/${cardId}`, {
         headers: {
           authorization: `${this._authKey}`
         },
-        method: 'PATCH',
-        body: JSON.stringify({
-          link: link
-        })
-      }
-    )
-    .then(res => this._checkResponse(res))
+        method: 'DELETE'
+      })
+      .then(res => this._checkResponse(res))
+    }
+    else {
+      return fetch(`${this._url}/cards/likes/${cardId}`, {
+        headers: {
+          authorization: `${this._authKey}`
+        },
+        method: 'PUT'
+      })
+      .then(res => this._checkResponse(res))
+    }
   }
 
   deletePost(cardId) {

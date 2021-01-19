@@ -2,8 +2,8 @@ import {Post} from './Post.js'
 import {selectors} from '../utils/data.js'
 
 export default class UserPost extends Post {
-  constructor({data, handleImageClick, handleDeleteClick}, template) {
-    super({data, handleImageClick}, template);
+  constructor({data, handleImageClick, handleLikeClick, handleDeleteClick}, template) {
+    super({data, handleImageClick, handleLikeClick}, template);
     this._handleDeleteClick = handleDeleteClick;
   }
   _setListeners () {

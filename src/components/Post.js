@@ -1,13 +1,15 @@
 import { selectors } from '../utils/data.js';
 
 class Post {
-  constructor({data, handleImageClick}, template) {
+  constructor({userdata, data, handleImageClick, handleLikeClick}, template) {
+    this._userdata = userdata;
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
     this._id = data._id;
     this._templateSelector = template;
     this._handleImageClick = handleImageClick;
+    this._handleLikeClick = handleLikeClick;
   }
 
   _getTemplate () {
@@ -23,11 +25,14 @@ class Post {
     return this._id
   }
 
+  isLiked(userData) {
+    return  JSON.stringify(this._likes).includes(JSON.stringify(userData))
+  }
+
   generateNewPost () {
     this._post = this._getTemplate();
     const postImage = this._post.querySelector(selectors.postImage);
     this._setListeners();
-    this._renderLikes();
 
     postImage.src = this._link;
     postImage.alt = this._name;
@@ -38,33 +43,25 @@ class Post {
   }
 
   _setListeners () {
-    this._post.querySelector(selectors.postLikeButton).addEventListener('click', this._like.bind(this));
+    this._likeButton = this._post.querySelector(selectors.postLikeButton)
+    this._likeButton.addEventListener('click', () => {
+      this._handleLikeClick(this._likeButton.classList.contains(selectors.postLikeButtonIsActive))
+    });
     this._post.querySelector(selectors.postImage).addEventListener('click', this._handleImageClick);
   }
 
-  _renderLikes () {
-    if(this._likes.length > 0) {
-      this._post.querySelector(selectors.postLikeCounter).textContent = this._likes.length;
-    }
-  }
-
-  _like () {
+  like (postData) {
     const likeButton = this._post.querySelector(selectors.postLikeButton);
     const LikeCounter = this._post.querySelector(selectors.postLikeCounter);
+    this._likes = postData.likes.length
 
+    if (this._likes === 0) {
+      LikeCounter.textContent = ''
+    } else {
+      LikeCounter.textContent = this._likes
+    }
+    
     likeButton.classList.toggle(selectors.postLikeButtonIsActive);
-
-    // if (likeButton.classList.contains(selectors.postLikeButtonIsActive)){
-    //   LikeCounter.textContent = `${this._likes.length + 1}`;
-    // }
-    // else {
-    //   if (LikeCounter.textContent === '1') {
-    //     LikeCounter.textContent = '';
-    //   }
-    //   else {
-    //     LikeCounter.textContent = `${this._likes.length}`;
-    //   }
-    // }
   }
 }
 
