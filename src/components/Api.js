@@ -50,7 +50,6 @@ export default class Api {
   }
 
   setAvatar({link}) {
-    console.log(link)
     return fetch(`${this._url}/users/me/avatar` ,{
         headers: this._headers,
         method: 'PATCH',

@@ -37,9 +37,7 @@ const dataPromises = [api.getInitialCards(), api.getUserInfo()];
 Promise.all(dataPromises)
   .then(data => {
     const [postsData, userData] = data;
-
     userInfo.setUserInfo(userData);
-
 
     const posts = new Section({
       renderer: (item) => {
@@ -53,11 +51,14 @@ Promise.all(dataPromises)
 
     const popupAdd = new PopupWithForm({
       submiter: (inputValues) => {
+        popupAdd.renderLoading(true)
         api.addNewPost(inputValues)
           .then(result => {
             const post = getUserPost(result, selectors.userPostTemplate);
             posts.prependItem(post);
           })
+          .catch(error => console.log(`Ошибка: ${error}`))
+          .finally(() => popupEdit.renderLoading(false))
         popupAdd.close();
       },
       selector: selectors.popupAddPost
@@ -70,6 +71,7 @@ Promise.all(dataPromises)
         handleImageClick: () => popupWithImage.open(input),
         handleLikeClick: (isLiked) => api.likePost(isLiked, post.getPostId())
           .then(data => post.like(data))
+          .catch(error => console.log(`Ошибка: ${error}`))
         },templateSelector);
       const postElement = post.generateNewPost();
     
@@ -81,7 +83,8 @@ Promise.all(dataPromises)
       popupConfirm.handleDeleteRequest(() => {
         api.deletePost(post.getPostId())
           .then(post.delete())
-          .then(popupConfirm.close());
+          .then(popupConfirm.close())
+          .catch(error => console.log(`Ошибка: ${error}`))
       });
     }
 
@@ -90,8 +93,9 @@ Promise.all(dataPromises)
         data: input,
         handleImageClick: () => popupWithImage.open(input),
         handleLikeClick: (isLiked) => api.likePost(isLiked, post.getPostId())
-        .then(data => post.like(data)),
-        handleDeleteClick: (post) => deleteRequest(post),
+          .then(data => post.like(data))
+          .catch(error => console.log(`Ошибка: ${error}`)),
+        handleDeleteClick: () => deleteRequest(post),
       },templateSelector);
       const postElement = post.generateNewPost();
     
@@ -102,21 +106,22 @@ Promise.all(dataPromises)
       addFormValidator.resetValidation();
       popupAdd.open();
     });
-    console.log(postsData)
     posts.renderPosts(postsData);
 
     popupAdd.setEventListeners();
   })
+  .catch(error => console.log(`Ошибка: ${error}`))
 
 const popupConfirm = new PopupConfirm(selectors.popupConfirm);
 const popupWithImage = new PopupWithImage(selectors.popupWithImage);
 
 const popupAvatar = new PopupWithForm({
   submiter: (inputValues) => {
+    popupAvatar.renderLoading(true)
     api.setAvatar(inputValues)
-      .then(result => {
-        userInfo.setUserInfo(result);
-      })
+      .then(result => userInfo.setUserInfo(result))
+      .catch(error => console.log(`Ошибка: ${error}`))
+      .finally(() => popupEdit.renderLoading(false))
     popupAvatar.close();
   },
   selector: selectors.popupAvatar
@@ -124,8 +129,11 @@ const popupAvatar = new PopupWithForm({
 
 const popupEdit = new PopupWithForm({ 
   submiter: (inputValues) => {
+    popupEdit.renderLoading(true)
     api.editUserProfile(inputValues)
       .then(result => userInfo.setUserInfo(result))
+      .catch(error => console.log(`Ошибка: ${error}`))
+      .finally(() => popupEdit.renderLoading(false))
     popupEdit.close();
   },
   selector: selectors.popupEdit

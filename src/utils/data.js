@@ -35,6 +35,7 @@ export const selectors = {
     popupInput: '.popup__input',
     popupImage: '.popup__post-image',
     popupTitle: '.popup__post-title',
+    submitSelector: '.popup__submit-button',
     post: '.post',
     imageClass: 'post__image',
     postImage: '.post__image',
