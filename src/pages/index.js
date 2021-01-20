@@ -56,8 +56,8 @@ Promise.all(dataPromises)
           .then(result => {
             const post = getUserPost(result, selectors.userPostTemplate);
             posts.prependItem(post);
+            popupAdd.close();
           })
-          .then(popupAdd.close())
           .catch(error => console.log(`Ошибка: ${error}`))
           .finally(() => popupAdd.renderLoading(false))
       },
@@ -119,8 +119,10 @@ const popupAvatar = new PopupWithForm({
   submiter: (inputValues) => {
     popupAvatar.renderLoading(true)
     api.setAvatar(inputValues)
-      .then(result => userInfo.setUserInfo(result))
-      .then(popupAvatar.close())
+      .then(result => {
+        userInfo.setUserInfo(result);
+        popupAvatar.close();
+      })
       .catch(error => console.log(`Ошибка: ${error}`))
       .finally(() => popupAvatar.renderLoading(false))
   },
@@ -131,8 +133,10 @@ const popupEdit = new PopupWithForm({
   submiter: (inputValues) => {
     popupEdit.renderLoading(true)
     api.editUserProfile(inputValues)
-      .then(result => userInfo.setUserInfo(result))
-      .then(popupEdit.close())
+      .then(result => {
+        userInfo.setUserInfo(result)
+        popupEdit.close()
+      })
       .catch(error => console.log(`Ошибка: ${error}`))
       .finally(() => popupEdit.renderLoading(false))
   },
